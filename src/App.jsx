@@ -48,7 +48,6 @@ function PageLoader() {
 export default function App() {
   const { state } = useApp();
 
-  if (state.isAuthLoading) return <PageLoader />;
   if (!state.authUser) return <Login />;
 
   const PageComponent = PAGES[state.currentPage] ?? Dashboard;

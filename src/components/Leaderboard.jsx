@@ -2,7 +2,7 @@
 import { useMemo, useState, useEffect, useRef } from 'react';
 import { useApp } from '../store/AppContext';
 import { getLevelFromXP, LEVEL_THRESHOLDS } from '../utils/scoring';
-import { getAllUsers } from '../utils/auth';
+import { getAllPlayers } from '../utils/auth';
 
 // ─── Demo roster (shown when only 1 registered user exists) ───────────────────
 const DEMO_RIVALS = [
@@ -18,10 +18,9 @@ const DEMO_RIVALS = [
   { id: 'r10', name: 'Mason C.',  av: 'M', store: '114',  allXP:  640, streak: 1,  color: '#166534' },
 ];
 const TABS = [
-  { id: 'all', label: 'All Time' },
-  { id: 'week', label: 'This Week' },
+  { id: 'all',   label: 'All Time' },
+  { id: 'week',  label: 'This Week' },
   { id: 'month', label: 'This Month' },
-  { id: 'store', label: 'My Store' },
 ];
 function tabXP(p, tab) {
   if (tab === 'week')  return Math.round(p.allXP * 0.18 + p.streak * 20);
@@ -99,7 +98,7 @@ function RankRow({ p }) {
       <Av letter={p.av} size={40} color={p.color} />
       <div className="lb2-rinfo">
         <div className="lb2-rname">{p.name}{p.isMe && <span className="lb2-you-tag">You</span>}</div>
-        <div className="lb2-rsub">Store {p.store}</div>
+        <div className="lb2-rsub">Level {p.level}</div>
       </div>
       <div className="lb2-rlv">Lv {p.level}</div>
       <div className="lb2-rxp"><CountUp value={p.xp} /> XP</div>
@@ -116,7 +115,7 @@ function RivalRow({ p, rel }) {
       <Av letter={p.av} size={44} color={p.color} glow={isMe} />
       <div className="lb2-rivalinfo">
         <div className="lb2-rivalname">{p.name}{isMe && <span className="lb2-you-tag">You</span>}</div>
-        <div className="lb2-rivalsub">Store {p.store} · 🔥{p.streak}</div>
+        <div className="lb2-rivalsub">🔥 {p.streak} day streak</div>
       </div>
       <div className="lb2-rivalxp">{p.xp.toLocaleString()} XP</div>
     </div>
@@ -126,37 +125,29 @@ function RivalRow({ p, rel }) {
 export default function Leaderboard() {
   const { state, actions } = useApp();
   const [tab, setTab] = useState('all');
-  const [dbUsers, setDbUsers] = useState(null);
 
-  useEffect(() => {
-    getAllUsers().then(u => setDbUsers(u)).catch(() => setDbUsers([]));
-  }, []);
+  const { ranked, me, myRank, above, below } = useMemo(() => {
+    const myId     = state.authUser?.id;
 
-  const { ranked, me, myRank, above, below, topStores } = useMemo(() => {
-    const myId  = state.authUser?.id;
-    const myStore_ = norStore(state.store);
-
-    // Build pool from all registered users (async from Supabase)
-    let pool = (dbUsers || []).map(u => ({
+    // Build pool from all players saved locally
+    let pool = getAllPlayers().map(u => ({
       id:     u.id,
-      name:   u.displayName || u.username,
-      av:     (u.firstName || u.username || '?').charAt(0).toUpperCase(),
-      store:  norStore(u.storeNumber),
-      allXP:  u.progress?.xp || 0,
-      streak: u.progress?.streak || 0,
+      name:   u.name || 'Player',
+      av:     (u.name || '?').charAt(0).toUpperCase(),
+      store:  '—',
+      allXP:  u.xp     || 0,
+      streak: u.streak || 0,
       color:  u.avatarColor || '#0050aa',
       isMe:   u.id === myId,
     }));
 
-    // If only the current user exists, add demo rivals for a populated board
+    // Always add demo rivals when few real players exist
     if (pool.length <= 1) {
       pool = [
         ...pool,
         ...DEMO_RIVALS.map(r => ({ ...r, isMe: false })),
       ];
     }
-
-    if (tab === 'store') pool = pool.filter(p => p.store === myStore_);
 
     const ranked = pool
       .map(p => ({ ...p, xp: tabXP(p, tab), level: getLevelFromXP(tabXP(p, tab)) }))
@@ -166,18 +157,14 @@ export default function Leaderboard() {
     const meIdx  = ranked.findIndex(p => p.isMe);
     const meBase = { id: myId || 'me', name: state.user || 'You',
       av: (state.user || 'Y').charAt(0).toUpperCase(),
-      store: myStore_, allXP: state.xp, streak: state.streak,
+      store: '—', allXP: state.xp, streak: state.streak,
       color: state.authUser?.avatarColor || '#0050aa', isMe: true };
-    const me     = meIdx >= 0 ? ranked[meIdx] : { ...meBase, xp: state.xp, level: getLevelFromXP(state.xp), rank: ranked.length + 1 };
-    const above  = meIdx > 0 ? ranked[meIdx - 1] : null;
-    const below  = meIdx >= 0 && meIdx < ranked.length - 1 ? ranked[meIdx + 1] : null;
+    const me    = meIdx >= 0 ? ranked[meIdx] : { ...meBase, xp: state.xp, level: getLevelFromXP(state.xp), rank: ranked.length + 1 };
+    const above = meIdx > 0 ? ranked[meIdx - 1] : null;
+    const below = meIdx >= 0 && meIdx < ranked.length - 1 ? ranked[meIdx + 1] : null;
 
-    const sm = {};
-    pool.forEach(p => { sm[p.store] = (sm[p.store] || 0) + tabXP(p, tab); });
-    const topStores = Object.entries(sm).map(([store, xp]) => ({ store, xp })).sort((a, b) => b.xp - a.xp).slice(0, 5);
-
-    return { ranked, me, myRank: me.rank, above, below, topStores };
-  }, [tab, dbUsers, state.authUser, state.user, state.store, state.xp, state.streak]);
+    return { ranked, me, myRank: me.rank, above, below };
+  }, [tab, state.authUser, state.user, state.xp, state.streak]);
 
   const top3  = ranked.slice(0, 3);
   const top10 = ranked.slice(0, 10);
@@ -186,7 +173,6 @@ export default function Leaderboard() {
   const curLvlXP  = LEVEL_THRESHOLDS[me.level - 1] ?? 0;
   const nextLvlXP = LEVEL_THRESHOLDS[me.level] ?? null;
   const lvlPct    = nextLvlXP ? Math.min(100, Math.round(((me.xp - curLvlXP) / (nextLvlXP - curLvlXP)) * 100)) : 100;
-  const SMED = ['🥇','🥈','🥉','4th','5th'];
 
   return (
     <div className="lb2">
@@ -284,20 +270,6 @@ export default function Leaderboard() {
           {top10.map(p => <RankRow key={p.id} p={p} />)}
         </div>
         {ranked.length > 10 && <div className="lb2-more">Showing top 10 of {ranked.length} players</div>}
-      </section>
-
-      {/* STORE LEADERBOARD */}
-      <section className="lb2-section">
-        <h2 className="lb2-sh">🏪 Top Stores</h2>
-        <div className="lb2-stores">
-          {topStores.map((s,i) => (
-            <div key={s.store} className={`lb2-storecard${s.store === myStore ? ' lb2-storecard-me' : ''}`}>
-              <div className="lb2-storemedal">{SMED[i]}</div>
-              <div><div className="lb2-storename">Store {s.store}</div><div className="lb2-storexp">{s.xp.toLocaleString()} XP</div></div>
-              {s.store === myStore && <span className="lb2c fire" style={{marginLeft:'auto'}}>Your Store</span>}
-            </div>
-          ))}
-        </div>
       </section>
     </div>
   );

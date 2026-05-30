@@ -1,12 +1,11 @@
 import { createContext, useContext, useReducer, useEffect, useRef } from 'react';
-import { loadAllProducts, buildCategories }  from '../utils/dataLoader';
-import { getLevelFromXP }                    from '../utils/scoring';
-import { todayString, yesterdayString }      from '../utils/helpers';
-import { onAuthStateChange, getUserProfile, getProgress, saveProgress, updateProfile as updateProfileFn, logoutUser } from '../utils/auth';
-import { checkAchievements }                 from '../utils/achievements';
-import { supabase }                          from '../utils/supabaseClient';
+import { loadAllProducts, buildCategories } from '../utils/dataLoader';
+import { getLevelFromXP }                   from '../utils/scoring';
+import { todayString, yesterdayString }     from '../utils/helpers';
+import { getPlayer, getProgress, saveProgress, updatePlayer, logoutPlayer, createPlayer } from '../utils/auth';
+import { checkAchievements }                from '../utils/achievements';
 
-// ─── Blank per-user progress ──────────────────────────────────────────────────
+// ─── Blank progress defaults ──────────────────────────────────────────────────
 const blankProgress = {
   xp: 0, level: 1, streak: 0, lastActiveDate: null,
   masteredPLUs: {}, favorites: {}, mistakes: {},
@@ -16,10 +15,9 @@ const blankProgress = {
   isDarkMode: false, currentPage: 'dashboard',
 };
 
-// ─── Initial state ────────────────────────────────────────────────────────────
+// ─── Initial state (empty — overridden by initState below) ───────────────────
 const initialState = {
   authUser:          null,
-  isAuthLoading:     true,   // true while Supabase checks for a session
   ...blankProgress,
   products:          [],
   categories:        [],
@@ -27,34 +25,40 @@ const initialState = {
   xpPopup: { show: false, amount: 0, didLevelUp: false, achievementId: null },
 };
 
+// ─── Synchronous initializer — restores saved player from localStorage ────────
+function initState() {
+  try {
+    const player = getPlayer();
+    if (!player) return initialState;
+    const progress = getProgress(player.id);
+    document.documentElement.setAttribute('data-theme', progress.isDarkMode ? 'dark' : 'light');
+    return { ...initialState, authUser: player, ...progress };
+  } catch {
+    return initialState;
+  }
+}
+
 // ─── Reducer ──────────────────────────────────────────────────────────────────
 function reducer(state, action) {
   switch (action.type) {
 
     case 'LOGIN': {
       const progress = action.progress || {};
-      const newState = {
+      document.documentElement.setAttribute('data-theme', progress.isDarkMode ? 'dark' : 'light');
+      return {
         ...initialState,
         authUser:          action.user,
-        isAuthLoading:     false,
         ...progress,
         products:          state.products,
         categories:        state.categories,
         isLoadingProducts: state.isLoadingProducts,
         xpPopup:           { show: false, amount: 0, didLevelUp: false, achievementId: null },
       };
-      // Apply saved dark mode
-      document.documentElement.setAttribute('data-theme', progress.isDarkMode ? 'dark' : 'light');
-      return newState;
     }
-
-    case 'AUTH_READY':
-      return { ...state, isAuthLoading: false };
 
     case 'LOGOUT':
       return {
         ...initialState,
-        isAuthLoading:     false,
         products:          state.products,
         categories:        state.categories,
         isLoadingProducts: false,
@@ -92,7 +96,7 @@ function reducer(state, action) {
 
     case 'UPDATE_STREAK': {
       const today = todayString(), yesterday = yesterdayString(), last = state.lastActiveDate;
-      let streak = last === today ? state.streak : last === yesterday ? state.streak + 1 : 1;
+      const streak = last === today ? state.streak : last === yesterday ? state.streak + 1 : 1;
       return { ...state, streak, lastActiveDate: today };
     }
 
@@ -120,8 +124,8 @@ function reducer(state, action) {
       return { ...state, totalCorrect: state.totalCorrect + (action.isCorrect ? 1 : 0), totalAnswered: state.totalAnswered + 1, _perfectStreak: perfect };
     }
 
-    case 'INCREMENT_QUIZ':    return { ...state, quizzesPlayed: state.quizzesPlayed + 1 };
-    case 'INCREMENT_STUDY_MINUTE': return { ...state, studyMinutes: state.studyMinutes + 1 };
+    case 'INCREMENT_QUIZ':         return { ...state, quizzesPlayed:  state.quizzesPlayed + 1 };
+    case 'INCREMENT_STUDY_MINUTE': return { ...state, studyMinutes:   state.studyMinutes + 1 };
 
     case 'COMPLETE_DAILY_CHALLENGE': {
       const today = todayString();
@@ -141,73 +145,24 @@ function reducer(state, action) {
   }
 }
 
-// ─── Load user data from Supabase ─────────────────────────────────────────────
-async function loadAndLoginUser(userId, dispatch) {
-  try {
-    const [user, progress] = await Promise.all([
-      getUserProfile(userId),
-      getProgress(userId),
-    ]);
-    if (user) {
-      dispatch({ type: 'LOGIN', user, progress });
-    } else {
-      dispatch({ type: 'AUTH_READY' });
-    }
-  } catch {
-    dispatch({ type: 'AUTH_READY' });
-  }
-}
-
 // ─── Context ──────────────────────────────────────────────────────────────────
 const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, null, initState);
   const stateRef = useRef(state);
   stateRef.current = state;
-
-  // ── Supabase auth listener (fires immediately with INITIAL_SESSION) ────────
-  useEffect(() => {
-    let subscription;
-    try {
-      const { data } = onAuthStateChange(async (event, session) => {
-        if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
-          if (session?.user) {
-            await loadAndLoginUser(session.user.id, dispatch);
-          } else {
-            dispatch({ type: 'AUTH_READY' });
-          }
-        } else if (event === 'SIGNED_OUT') {
-          dispatch({ type: 'LOGOUT' });
-        } else if (event === 'USER_UPDATED' && session?.user) {
-          const user = await getUserProfile(session.user.id);
-          if (user) dispatch({ type: 'SET_AUTH_USER', user });
-        }
-      });
-      subscription = data.subscription;
-    } catch (err) {
-      console.error('[AppContext] Supabase auth listener failed:', err.message);
-      dispatch({ type: 'AUTH_READY' }); // show login page even if Supabase is misconfigured
-    }
-    return () => subscription?.unsubscribe();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // ── Safety timeout: if Supabase never fires INITIAL_SESSION, unblock after 5s ──
-  useEffect(() => {
-    const t = setTimeout(() => dispatch({ type: 'AUTH_READY' }), 5000);
-    return () => clearTimeout(t);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Load products on mount ────────────────────────────────────────────────
   useEffect(() => {
     loadAllProducts().then(products => dispatch({ type: 'SET_PRODUCTS', products }));
   }, []);
 
-  // ── Persist progress to Supabase whenever state changes ──────────────────
+  // ── Save progress to localStorage after every state change ────────────────
   useEffect(() => {
     if (!state.authUser) return;
     saveProgress(state.authUser.id, state);
-  }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
+  }); // no deps — runs after every render, keeps data fresh
 
   // ── Achievement checker ───────────────────────────────────────────────────
   useEffect(() => {
@@ -225,44 +180,52 @@ export function AppProvider({ children }) {
 
   // ── Actions ───────────────────────────────────────────────────────────────
   const actions = {
-    logout: async () => { await logoutUser(); /* onAuthStateChange fires LOGOUT */ },
+    // Called from the Welcome screen after entering a name
+    loginWithName: (name) => {
+      const player   = createPlayer(name);
+      const progress = getProgress(player.id);
+      dispatch({ type: 'LOGIN', user: player, progress });
+    },
+
+    logout: () => {
+      logoutPlayer();
+      dispatch({ type: 'LOGOUT' });
+    },
 
     setPage:    page => dispatch({ type: 'SET_PAGE', page }),
     toggleDark: ()   => dispatch({ type: 'TOGGLE_DARK' }),
 
-    addXP:         amount    => dispatch({ type: 'ADD_XP', amount }),
-    hideXPPopup:   ()        => dispatch({ type: 'HIDE_XP_POPUP' }),
-    updateStreak:  ()        => dispatch({ type: 'UPDATE_STREAK' }),
+    addXP:        amount    => dispatch({ type: 'ADD_XP', amount }),
+    hideXPPopup:  ()        => dispatch({ type: 'HIDE_XP_POPUP' }),
+    updateStreak: ()        => dispatch({ type: 'UPDATE_STREAK' }),
 
-    markMastered:   plu      => dispatch({ type: 'MARK_MASTERED', plu }),
-    toggleFavorite: plu      => dispatch({ type: 'TOGGLE_FAVORITE', plu }),
+    markMastered:   plu => dispatch({ type: 'MARK_MASTERED', plu }),
+    toggleFavorite: plu => dispatch({ type: 'TOGGLE_FAVORITE', plu }),
 
-    recordMistake:  plu      => dispatch({ type: 'RECORD_MISTAKE', plu }),
-    removeMistake:  plu      => dispatch({ type: 'REMOVE_MISTAKE', plu }),
-    clearMistakes:  ()       => dispatch({ type: 'CLEAR_MISTAKES' }),
+    recordMistake:  plu => dispatch({ type: 'RECORD_MISTAKE', plu }),
+    removeMistake:  plu => dispatch({ type: 'REMOVE_MISTAKE', plu }),
+    clearMistakes:  ()  => dispatch({ type: 'CLEAR_MISTAKES' }),
 
-    recordAnswer:   isCorrect => dispatch({ type: 'RECORD_ANSWER', isCorrect }),
-    incrementQuiz:  ()        => dispatch({ type: 'INCREMENT_QUIZ' }),
+    recordAnswer:  isCorrect => dispatch({ type: 'RECORD_ANSWER', isCorrect }),
+    incrementQuiz: ()        => dispatch({ type: 'INCREMENT_QUIZ' }),
 
     completeDailyChallenge: () => dispatch({ type: 'COMPLETE_DAILY_CHALLENGE' }),
     setDailyGoal: goal         => dispatch({ type: 'SET_DAILY_GOAL', goal }),
 
-    updateProfile: async (fields) => {
-      const user = stateRef.current.authUser;
-      if (!user) return;
-      const updated = await updateProfileFn(user.id, fields);
+    updateProfile: (fields) => {
+      const updated = updatePlayer(fields);
       if (updated) dispatch({ type: 'SET_AUTH_USER', user: updated });
     },
 
     setProducts: products => dispatch({ type: 'SET_PRODUCTS', products }),
   };
 
-  // Back-compat: state.user / state.store / state.role still work
+  // Back-compat shims for components that still read state.user / state.store
   const stateWithCompat = {
     ...state,
-    user:  state.authUser ? state.authUser.displayName : null,
-    store: state.authUser?.storeNumber || '',
-    role:  state.authUser?.role        || '',
+    user:  state.authUser?.displayName ?? null,
+    store: state.authUser?.storeNumber ?? '',
+    role:  state.authUser?.role        ?? '',
   };
 
   return (
@@ -272,6 +235,7 @@ export function AppProvider({ children }) {
   );
 }
 
+// ─── Hook ─────────────────────────────────────────────────────────────────────
 export function useApp() {
   const ctx = useContext(AppContext);
   if (!ctx) throw new Error('useApp must be used inside <AppProvider>');

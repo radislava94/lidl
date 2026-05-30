@@ -1683,6 +1683,22 @@
 .auth-success-box h3 { font-size: 1.15rem; font-weight: 800; color: var(--blue); margin: 0; }
 .auth-success-box p  { font-size: .9rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
 
+/* ── Welcome screen ────────────────────────────────────────────────────────── */
+.welcome-card { max-width: 440px; }
+.welcome-form { gap: 18px; }
+.welcome-prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.welcome-wave { font-size: 1.5rem; }
+.welcome-input { font-size: 1.05rem; }
+.welcome-btn   { font-size: 1.05rem; padding: 14px; letter-spacing: .5px; }
+
 /* Forgot password flow */
 .auth-back-btn {
   background: none;
