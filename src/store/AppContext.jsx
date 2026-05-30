@@ -168,22 +168,34 @@ export function AppProvider({ children }) {
 
   // ── Supabase auth listener (fires immediately with INITIAL_SESSION) ────────
   useEffect(() => {
-    const { data: { subscription } } = onAuthStateChange(async (event, session) => {
-      if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
-        if (session?.user) {
-          await loadAndLoginUser(session.user.id, dispatch);
-        } else {
-          dispatch({ type: 'AUTH_READY' });
+    let subscription;
+    try {
+      const { data } = onAuthStateChange(async (event, session) => {
+        if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
+          if (session?.user) {
+            await loadAndLoginUser(session.user.id, dispatch);
+          } else {
+            dispatch({ type: 'AUTH_READY' });
+          }
+        } else if (event === 'SIGNED_OUT') {
+          dispatch({ type: 'LOGOUT' });
+        } else if (event === 'USER_UPDATED' && session?.user) {
+          const user = await getUserProfile(session.user.id);
+          if (user) dispatch({ type: 'SET_AUTH_USER', user });
         }
-      } else if (event === 'SIGNED_OUT') {
-        dispatch({ type: 'LOGOUT' });
-      } else if (event === 'USER_UPDATED' && session?.user) {
-        // Reload profile after password/email update
-        const user = await getUserProfile(session.user.id);
-        if (user) dispatch({ type: 'SET_AUTH_USER', user });
-      }
-    });
-    return () => subscription.unsubscribe();
+      });
+      subscription = data.subscription;
+    } catch (err) {
+      console.error('[AppContext] Supabase auth listener failed:', err.message);
+      dispatch({ type: 'AUTH_READY' }); // show login page even if Supabase is misconfigured
+    }
+    return () => subscription?.unsubscribe();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Safety timeout: if Supabase never fires INITIAL_SESSION, unblock after 5s ──
+  useEffect(() => {
+    const t = setTimeout(() => dispatch({ type: 'AUTH_READY' }), 5000);
+    return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Load products on mount ────────────────────────────────────────────────
