@@ -13,6 +13,7 @@ const NAV = [
   { page: 'progress',   icon: 'fa-chart-bar',        label: 'Progress'         },
   { page: 'mistakes',   icon: 'fa-exclamation-circle', label: 'Mistakes'       },
   { page: 'leaderboard',icon: 'fa-trophy',           label: 'Leaderboard'      },
+  { page: 'profile',    icon: 'fa-user-circle',      label: 'My Profile'       },
   { page: 'import',     icon: 'fa-file-import',      label: 'Import Products'  },
   { page: 'settings',   icon: 'fa-cog',              label: 'Settings'         },
 ];
@@ -40,7 +41,7 @@ export default function Layout({ children }) {
           <button type="button" className="icon-btn dark-toggle-btn" onClick={actions.toggleDark} title="Toggle dark mode" aria-label="Toggle dark mode">
             <i className={`fa ${state.isDarkMode ? 'fa-sun' : 'fa-moon'}`} />
           </button>
-          <button type="button" className="avatar-btn" onClick={() => actions.setPage('progress')} title="My Progress" aria-label="Open progress page">
+          <button type="button" className="avatar-btn" onClick={() => actions.setPage('profile')} title="My Profile" aria-label="Open profile page">
             {initial}
           </button>
         </div>
@@ -57,7 +58,7 @@ export default function Layout({ children }) {
           <div className="sidebar-user">
             <div className="sidebar-avatar">{initial}</div>
             <div>
-              <div className="sidebar-name">{state.user}</div>
+              <div className="sidebar-name">{state.authUser?.displayName || state.user}</div>
               <div className="sidebar-level">Level {state.level} · {state.xp} XP</div>
             </div>
           </div>

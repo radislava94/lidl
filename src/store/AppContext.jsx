@@ -1,78 +1,73 @@
-import { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
-import { loadAllProducts, buildCategories }      from '../utils/dataLoader';
-import { getLevelFromXP }                         from '../utils/scoring';
-import { todayString, yesterdayString }           from '../utils/helpers';
+import { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react';
+import { loadAllProducts, buildCategories } from '../utils/dataLoader';
+import { getLevelFromXP }                   from '../utils/scoring';
+import { todayString, yesterdayString }     from '../utils/helpers';
+import { restoreSession, logoutUser, getProgress, saveProgress, updateProfile } from '../utils/auth';
+import { checkAchievements }                from '../utils/achievements';
 
-// ─── Storage key ──────────────────────────────────────────────────────────────
-const STORAGE_KEY = 'plulearn_v2';
-
-// ─── Initial state ────────────────────────────────────────────────────────────
-const initialState = {
-  // ── Products (ephemeral — reloaded each session) ──
-  products:            [],
-  categories:          [],
-  isLoadingProducts:   true,
-
-  // ── User ──
-  user:     null,
-  store:    '',
-  role:     '',
-
-  // ── Progress ──
-  xp:              0,
-  level:           1,
-  streak:          0,
-  lastActiveDate:  null,
-  masteredPLUs:    {},   // { [plu]: true }
-  favorites:       {},   // { [plu]: true }
-  mistakes:        {},   // { [plu]: count }
-
-  // ── Stats ──
-  totalCorrect:   0,
-  totalAnswered:  0,
-  quizzesPlayed:  0,
-  studyMinutes:   0,
-  learnedToday:   0,
-  dailyGoal:      10,
-
-  // ── Daily Challenge ──
-  dailyChallengeDate: null,   // date string of last completion (YYYY-MM-DD)
-
-  // ── UI ──
-  currentPage: 'dashboard',
-  isDarkMode:  false,
-
-  // ── XP Popup ──
-  xpPopup: { show: false, amount: 0, didLevelUp: false },
+// ─── Initial per-user progress (also the "empty" state) ──────────────────────
+const blankProgress = {
+  xp:                 0,
+  level:              1,
+  streak:             0,
+  lastActiveDate:     null,
+  masteredPLUs:       {},
+  favorites:          {},
+  mistakes:           {},
+  totalCorrect:       0,
+  totalAnswered:      0,
+  quizzesPlayed:      0,
+  studyMinutes:       0,
+  learnedToday:       0,
+  dailyGoal:          10,
+  dailyChallengeDate: null,
+  achievements:       [],
+  _perfectStreak:     0,
+  isDarkMode:         false,
+  currentPage:        'dashboard',
 };
 
-// ─── Serialise / deserialise ──────────────────────────────────────────────────
-function serialise(state) {
-  const { products, categories, isLoadingProducts, xpPopup, ...rest } = state;
-  return rest;
-}
+// ─── Full app state (products are always ephemeral) ───────────────────────────
+const initialState = {
+  // ── Auth ──
+  authUser: null,           // UserRecord from auth.js (no password hash exposed to UI)
 
-function deserialise(raw) {
-  return {
-    ...initialState,
-    ...raw,
-    products:          [],
-    categories:        [],
-    isLoadingProducts: true,
-    xpPopup:           { show: false, amount: 0, didLevelUp: false },
-  };
-}
+  // ── Per-user progress (merged from blankProgress + localStorage) ──
+  ...blankProgress,
+
+  // ── Ephemeral ──
+  products:          [],
+  categories:        [],
+  isLoadingProducts: true,
+  xpPopup: { show: false, amount: 0, didLevelUp: false, achievementId: null },
+};
 
 // ─── Reducer ──────────────────────────────────────────────────────────────────
 function reducer(state, action) {
   switch (action.type) {
 
     // ── Auth ──────────────────────────────────────────────────────────────────
-    case 'LOGIN':
-      return { ...state, user: action.user, store: action.store, role: action.role };
+    case 'LOGIN': {
+      const progress = getProgress(action.user.id);
+      return {
+        ...initialState,
+        authUser:          action.user,
+        ...progress,
+        products:          state.products,
+        categories:        state.categories,
+        isLoadingProducts: state.isLoadingProducts,
+        xpPopup:           { show: false, amount: 0, didLevelUp: false, achievementId: null },
+      };
+    }
 
     case 'LOGOUT':
-      return { ...initialState, products: state.products, categories: state.categories, isLoadingProducts: false };
+      logoutUser();
+      return {
+        ...initialState,
+        products:          state.products,
+        categories:        state.categories,
+        isLoadingProducts: false,
+      };
 
     // ── Products ──────────────────────────────────────────────────────────────
     case 'SET_PRODUCTS': {
@@ -93,19 +88,19 @@ function reducer(state, action) {
 
     // ── XP & Level ────────────────────────────────────────────────────────────
     case 'ADD_XP': {
-      const earned  = Math.max(0, action.amount);
-      const newXP   = state.xp + earned;
+      const earned   = Math.max(0, action.amount);
+      const newXP    = state.xp + earned;
       const newLevel = getLevelFromXP(newXP);
       return {
         ...state,
-        xp:       newXP,
-        level:    newLevel,
-        xpPopup:  { show: true, amount: earned, didLevelUp: newLevel > state.level },
+        xp:      newXP,
+        level:   newLevel,
+        xpPopup: { show: true, amount: earned, didLevelUp: newLevel > state.level, achievementId: null },
       };
     }
 
     case 'HIDE_XP_POPUP':
-      return { ...state, xpPopup: { show: false, amount: 0, didLevelUp: false } };
+      return { ...state, xpPopup: { show: false, amount: 0, didLevelUp: false, achievementId: null } };
 
     // ── Streak ────────────────────────────────────────────────────────────────
     case 'UPDATE_STREAK': {
@@ -113,17 +108,15 @@ function reducer(state, action) {
       const yesterday = yesterdayString();
       const last      = state.lastActiveDate;
       let streak      = state.streak;
-
-      if (last === today)      streak = state.streak;
+      if      (last === today)     streak = state.streak;
       else if (last === yesterday) streak = state.streak + 1;
       else                         streak = 1;
-
       return { ...state, streak, lastActiveDate: today };
     }
 
     // ── Mastered PLUs ─────────────────────────────────────────────────────────
     case 'MARK_MASTERED':
-      if (state.masteredPLUs[action.plu]) return state; // already mastered
+      if (state.masteredPLUs[action.plu]) return state;
       return {
         ...state,
         masteredPLUs: { ...state.masteredPLUs, [action.plu]: true },
@@ -142,10 +135,8 @@ function reducer(state, action) {
     case 'RECORD_MISTAKE':
       return {
         ...state,
-        mistakes: {
-          ...state.mistakes,
-          [action.plu]: (state.mistakes[action.plu] || 0) + 1,
-        },
+        mistakes: { ...state.mistakes, [action.plu]: (state.mistakes[action.plu] || 0) + 1 },
+        _perfectStreak: 0,
       };
 
     case 'CLEAR_MISTAKES':
@@ -158,12 +149,15 @@ function reducer(state, action) {
     }
 
     // ── Quiz stats ────────────────────────────────────────────────────────────
-    case 'RECORD_ANSWER':
+    case 'RECORD_ANSWER': {
+      const perfect = action.isCorrect ? (state._perfectStreak || 0) + 1 : 0;
       return {
         ...state,
-        totalCorrect:  state.totalCorrect  + (action.isCorrect ? 1 : 0),
-        totalAnswered: state.totalAnswered + 1,
+        totalCorrect:   state.totalCorrect  + (action.isCorrect ? 1 : 0),
+        totalAnswered:  state.totalAnswered + 1,
+        _perfectStreak: perfect,
       };
+    }
 
     case 'INCREMENT_QUIZ':
       return { ...state, quizzesPlayed: state.quizzesPlayed + 1 };
@@ -171,27 +165,51 @@ function reducer(state, action) {
     // ── Study time ────────────────────────────────────────────────────────────
     case 'INCREMENT_STUDY_MINUTE':
       return { ...state, studyMinutes: state.studyMinutes + 1 };
-    // ── Daily Challenge ──────────────────────────────────────────────────────────────
+
+    // ── Daily Challenge ───────────────────────────────────────────────────────
     case 'COMPLETE_DAILY_CHALLENGE': {
       const today = todayString();
-      if (state.dailyChallengeDate === today) return state; // idempotent
+      if (state.dailyChallengeDate === today) return state;
       const earnedXP = 50;
       const newXP    = state.xp + earnedXP;
       const newLevel = getLevelFromXP(newXP);
       return {
         ...state,
         dailyChallengeDate: today,
-        xp:     newXP,
-        level:  newLevel,
-        xpPopup: { show: true, amount: earnedXP, didLevelUp: newLevel > state.level },
+        xp:      newXP,
+        level:   newLevel,
+        xpPopup: { show: true, amount: earnedXP, didLevelUp: newLevel > state.level, achievementId: null },
       };
     }
 
     case 'SET_DAILY_GOAL':
       return { ...state, dailyGoal: Math.max(1, Math.min(100, action.goal)) };
-    // ── Misc ──────────────────────────────────────────────────────────────────
+
     case 'RESET_TODAY':
       return { ...state, learnedToday: 0 };
+
+    // ── Achievements ──────────────────────────────────────────────────────────
+    case 'UNLOCK_ACHIEVEMENT': {
+      if (state.achievements.includes(action.id)) return state;
+      return {
+        ...state,
+        achievements: [...state.achievements, action.id],
+        xpPopup: { show: true, amount: 0, didLevelUp: false, achievementId: action.id },
+      };
+    }
+
+    // ── Profile update (name, avatar colour) ──────────────────────────────────
+    case 'UPDATE_PROFILE': {
+      if (!state.authUser) return state;
+      const updated = updateProfile(state.authUser.id, action.fields);
+      return { ...state, authUser: updated ?? state.authUser };
+    }
+
+    // ── Products (import) ─────────────────────────────────────────────────────
+    case 'SET_PRODUCTS_IMPORT': {
+      const cats = buildCategories(action.products);
+      return { ...state, products: action.products, categories: cats };
+    }
 
     default:
       return state;
@@ -202,77 +220,104 @@ function reducer(state, action) {
 const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
-  // Hydrate from localStorage on first render
   const [state, dispatch] = useReducer(reducer, null, () => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return deserialise(JSON.parse(raw));
-    } catch { /* ignore */ }
+    // Try to restore session (remember-me)
+    const user = restoreSession();
+    if (user) {
+      const progress = getProgress(user.id);
+      return {
+        ...initialState,
+        authUser: user,
+        ...progress,
+      };
+    }
     return initialState;
   });
 
-  // Persist whenever state changes (skip products/UI ephemeral fields)
+  // Persist progress whenever state changes
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(serialise(state)));
-    } catch { /* quota exceeded – silent */ }
+    if (!state.authUser) return;
+    const { products, categories, isLoadingProducts, xpPopup, authUser, ...progress } = state;
+    saveProgress(state.authUser.id, progress);
   }, [state]);
 
   // Load products on mount
   useEffect(() => {
-    loadAllProducts().then(products => {
-      dispatch({ type: 'SET_PRODUCTS', products });
-    });
+    loadAllProducts().then(products => dispatch({ type: 'SET_PRODUCTS', products }));
   }, []);
 
-  // Apply dark mode class on mount
+  // Apply dark mode on mount & auth change
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', state.isDarkMode ? 'dark' : 'light');
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [state.isDarkMode]);
 
-  // Study-time ticker (1 min interval while logged in)
+  // Study-time ticker
   useEffect(() => {
-    if (!state.user) return;
+    if (!state.authUser) return;
     const id = setInterval(() => dispatch({ type: 'INCREMENT_STUDY_MINUTE' }), 60_000);
     return () => clearInterval(id);
-  }, [state.user]);
+  }, [state.authUser]);
 
-  // ── Convenience action creators ──────────────────────────────────────────
+  // Achievement checker — runs after every state change
+  const prevAchievements = useRef(state.achievements);
+  useEffect(() => {
+    if (!state.authUser) return;
+    const newIds = checkAchievements(state, state.categories);
+    newIds.forEach(id => dispatch({ type: 'UNLOCK_ACHIEVEMENT', id }));
+    prevAchievements.current = state.achievements;
+  }); // intentionally no deps — runs after every render, achievement check is idempotent
+
+  // ── Action creators ──────────────────────────────────────────────────────
   const actions = {
-    login:  (user, store, role) => dispatch({ type: 'LOGIN', user, store, role }),
-    logout: ()                  => dispatch({ type: 'LOGOUT' }),
+    loginWithUser: user => {
+      dispatch({ type: 'LOGIN', user });
+      // Restore dark mode preference
+    },
+    logout: () => dispatch({ type: 'LOGOUT' }),
 
-    setPage: page => dispatch({ type: 'SET_PAGE', page }),
-    toggleDark:  () => dispatch({ type: 'TOGGLE_DARK' }),
+    setPage:    page  => dispatch({ type: 'SET_PAGE', page }),
+    toggleDark: ()    => dispatch({ type: 'TOGGLE_DARK' }),
 
-    addXP:          amount      => dispatch({ type: 'ADD_XP', amount }),
-    hideXPPopup:    ()          => dispatch({ type: 'HIDE_XP_POPUP' }),
-    updateStreak:   ()          => dispatch({ type: 'UPDATE_STREAK' }),
+    addXP:         amount    => dispatch({ type: 'ADD_XP', amount }),
+    hideXPPopup:   ()        => dispatch({ type: 'HIDE_XP_POPUP' }),
+    updateStreak:  ()        => dispatch({ type: 'UPDATE_STREAK' }),
 
-    markMastered:   plu         => dispatch({ type: 'MARK_MASTERED', plu }),
-    toggleFavorite: plu         => dispatch({ type: 'TOGGLE_FAVORITE', plu }),
+    markMastered:   plu      => dispatch({ type: 'MARK_MASTERED', plu }),
+    toggleFavorite: plu      => dispatch({ type: 'TOGGLE_FAVORITE', plu }),
 
-    recordMistake:  plu         => dispatch({ type: 'RECORD_MISTAKE', plu }),
-    removeMistake:  plu         => dispatch({ type: 'REMOVE_MISTAKE', plu }),
-    clearMistakes:  ()          => dispatch({ type: 'CLEAR_MISTAKES' }),
+    recordMistake:  plu      => dispatch({ type: 'RECORD_MISTAKE', plu }),
+    removeMistake:  plu      => dispatch({ type: 'REMOVE_MISTAKE', plu }),
+    clearMistakes:  ()       => dispatch({ type: 'CLEAR_MISTAKES' }),
 
-    recordAnswer:   isCorrect   => dispatch({ type: 'RECORD_ANSWER', isCorrect }),
-    incrementQuiz:  ()          => dispatch({ type: 'INCREMENT_QUIZ' }),
+    recordAnswer:   isCorrect => dispatch({ type: 'RECORD_ANSWER', isCorrect }),
+    incrementQuiz:  ()        => dispatch({ type: 'INCREMENT_QUIZ' }),
 
     completeDailyChallenge: () => dispatch({ type: 'COMPLETE_DAILY_CHALLENGE' }),
-    setDailyGoal: goal          => dispatch({ type: 'SET_DAILY_GOAL', goal }),
+    setDailyGoal: goal         => dispatch({ type: 'SET_DAILY_GOAL', goal }),
+
+    updateProfile: fields      => dispatch({ type: 'UPDATE_PROFILE', fields }),
+
+    setProducts: products      => dispatch({ type: 'SET_PRODUCTS', products }),
+  };
+
+  // Back-compat: state.user still works (was used by many components)
+  const stateWithCompat = {
+    ...state,
+    user: state.authUser ? state.authUser.displayName : null,
+    store: state.authUser?.storeNumber || '',
+    role:  state.authUser?.role || '',
   };
 
   return (
-    <AppContext.Provider value={{ state, dispatch, actions }}>
+    <AppContext.Provider value={{ state: stateWithCompat, dispatch, actions }}>
       {children}
     </AppContext.Provider>
   );
 }
 
-// ─── Hook ─────────────────────────────────────────────────────────────────────
 export function useApp() {
   const ctx = useContext(AppContext);
   if (!ctx) throw new Error('useApp must be used inside <AppProvider>');
   return ctx;
 }
+

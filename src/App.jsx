@@ -14,6 +14,7 @@ import Leaderboard      from './components/Leaderboard';
 import CashierSimulator from './components/CashierSimulator';
 import DailyChallenge   from './components/DailyChallenge';
 import Settings         from './components/Settings';
+import Profile          from './components/Profile';
 import XPPopup          from './components/shared/XPPopup';
 
 // Lazy-load the heavy ImportProducts page (pulls in xlsx / SheetJS)
@@ -33,6 +34,7 @@ const PAGES = {
   daily:       DailyChallenge,
   settings:    Settings,
   import:      ImportProducts,
+  profile:     Profile,
 };
 
 function PageLoader() {
@@ -46,7 +48,7 @@ function PageLoader() {
 export default function App() {
   const { state } = useApp();
 
-  if (!state.user) return <Login />;
+  if (!state.authUser) return <Login />;
 
   const PageComponent = PAGES[state.currentPage] ?? Dashboard;
 
