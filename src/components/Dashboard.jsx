@@ -81,7 +81,7 @@ export default function Dashboard() {
         </div>
         <div className="quick-actions">
           <button className="btn-primary" onClick={() => actions.setPage('learn')}>
-            <i className="fa fa-book-open" /> Continue Learning
+            <i className="fa fa-book-open" /> Start Learn Path
           </button>
           <button className="btn-yellow" onClick={() => actions.setPage('quiz')}>
             <i className="fa fa-bolt" /> Daily Challenge

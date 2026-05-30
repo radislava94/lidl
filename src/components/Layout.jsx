@@ -3,8 +3,8 @@ import { useApp }   from '../store/AppContext';
 
 const NAV = [
   { page: 'dashboard',  icon: 'fa-home',            label: 'Dashboard'        },
+  { page: 'learn',      icon: 'fa-book-open',        label: 'Learn Path'       },
   { page: 'categories', icon: 'fa-th-large',         label: 'Categories'       },
-  { page: 'learn',      icon: 'fa-book-open',        label: 'Learn'            },
   { page: 'flashcards', icon: 'fa-layer-group',      label: 'Flashcards'       },
   { page: 'quiz',       icon: 'fa-bolt',             label: 'Quiz'             },
   { page: 'memory',     icon: 'fa-brain',            label: 'Memory Game'      },
