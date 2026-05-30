@@ -87,7 +87,7 @@ export default function Layout({ children }) {
               </div>
             </div>
             <button type="button" className="btn-outline btn-sm logout-btn" onClick={actions.logout}>
-              <i className="fa fa-sign-out-alt" /> Logout
+              <i className="fa fa-users" /> Switch Player
             </button>
           </div>
         </nav>

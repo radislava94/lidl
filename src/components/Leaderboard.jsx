@@ -98,7 +98,7 @@ function RankRow({ p }) {
       <Av letter={p.av} size={40} color={p.color} />
       <div className="lb2-rinfo">
         <div className="lb2-rname">{p.name}{p.isMe && <span className="lb2-you-tag">You</span>}</div>
-        <div className="lb2-rsub">Level {p.level}</div>
+        <div className="lb2-rsub">Level {p.level} · {p.accuracy}% accuracy</div>
       </div>
       <div className="lb2-rlv">Lv {p.level}</div>
       <div className="lb2-rxp"><CountUp value={p.xp} /> XP</div>
@@ -115,7 +115,7 @@ function RivalRow({ p, rel }) {
       <Av letter={p.av} size={44} color={p.color} glow={isMe} />
       <div className="lb2-rivalinfo">
         <div className="lb2-rivalname">{p.name}{isMe && <span className="lb2-you-tag">You</span>}</div>
-        <div className="lb2-rivalsub">🔥 {p.streak} day streak</div>
+        <div className="lb2-rivalsub">Lv {p.level} · {p.accuracy}% accuracy · 🔥 {p.streak}</div>
       </div>
       <div className="lb2-rivalxp">{p.xp.toLocaleString()} XP</div>
     </div>
@@ -137,6 +137,7 @@ export default function Leaderboard() {
       store:  '—',
       allXP:  u.xp     || 0,
       streak: u.streak || 0,
+      accuracy: u.accuracy || 0,
       color:  u.avatarColor || '#0050aa',
       isMe:   u.id === myId,
     }));
@@ -157,6 +158,7 @@ export default function Leaderboard() {
     const meIdx  = ranked.findIndex(p => p.isMe);
     const meBase = { id: myId || 'me', name: state.user || 'You',
       av: (state.user || 'Y').charAt(0).toUpperCase(),
+      accuracy: state.totalAnswered > 0 ? Math.round((state.totalCorrect / state.totalAnswered) * 100) : 0,
       store: '—', allXP: state.xp, streak: state.streak,
       color: state.authUser?.avatarColor || '#0050aa', isMe: true };
     const me    = meIdx >= 0 ? ranked[meIdx] : { ...meBase, xp: state.xp, level: getLevelFromXP(state.xp), rank: ranked.length + 1 };
@@ -183,7 +185,7 @@ export default function Leaderboard() {
           <div className="lb2-hero-trophy">🏆</div>
           <h1 className="lb2-hero-h">Leaderboard</h1>
           <p className="lb2-hero-p">Compete with coworkers and become the ultimate PLU Master.</p>
-          <div className="lb2-hero-stats">
+          <div className="lb2-hero-stats">Accuracy', `${me.accuracy}%
             {[['Rank', `#${myRank}`],['Level', me.level],['Total XP', null],['Streak', `🔥 ${state.streak}`]].map(([lbl, val], i) => (
               <div key={lbl} className="lb2-hstat">
                 <span className="lb2-hstat-l">{lbl}</span>
@@ -211,8 +213,8 @@ export default function Leaderboard() {
               <div className="lb2-me-name">🔥 {me.name}</div>
               <div className="lb2-me-chips">
                 <span className="lb2c gold">Level {me.level}</span>
-                <span className="lb2c blue">Rank #{myRank}</span>
-                <span className="lb2c slate">Store {me.store}</span>
+                <span className="lb2c blue">{me.accuracy}% Accuracy</span>
+                <span className="lb2c slate">Level {me.level}</span>
                 <span className="lb2c fire">🔥 {state.streak} Day Streak</span>
               </div>
             </div>

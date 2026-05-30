@@ -1,8 +1,18 @@
-import { createContext, useContext, useReducer, useEffect, useRef } from 'react';
+import { createContext, useContext, useReducer, useEffect } from 'react';
 import { loadAllProducts, buildCategories } from '../utils/dataLoader';
 import { getLevelFromXP }                   from '../utils/scoring';
 import { todayString, yesterdayString }     from '../utils/helpers';
-import { getPlayer, getProgress, saveProgress, updatePlayer, logoutPlayer, createPlayer } from '../utils/auth';
+import {
+  getPlayer,
+  getProgress,
+  saveProgress,
+  updatePlayer,
+  logoutPlayer,
+  loginOrCreatePlayer,
+  loadPlayer,
+  deletePlayer,
+  resetProgress,
+} from '../utils/auth';
 import { checkAchievements }                from '../utils/achievements';
 
 // ─── Blank progress defaults ──────────────────────────────────────────────────
@@ -22,6 +32,7 @@ const initialState = {
   products:          [],
   categories:        [],
   isLoadingProducts: true,
+  playerDirectoryVersion: 0,
   xpPopup: { show: false, amount: 0, didLevelUp: false, achievementId: null },
 };
 
@@ -63,6 +74,9 @@ function reducer(state, action) {
         categories:        state.categories,
         isLoadingProducts: false,
       };
+
+    case 'PLAYER_DIRECTORY_CHANGED':
+      return { ...state, playerDirectoryVersion: state.playerDirectoryVersion + 1 };
 
     case 'SET_AUTH_USER':
       return { ...state, authUser: action.user };
@@ -150,8 +164,6 @@ const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, null, initState);
-  const stateRef = useRef(state);
-  stateRef.current = state;
 
   // ── Load products on mount ────────────────────────────────────────────────
   useEffect(() => {
@@ -182,14 +194,44 @@ export function AppProvider({ children }) {
   const actions = {
     // Called from the Welcome screen after entering a name
     loginWithName: (name) => {
-      const player   = createPlayer(name);
+      const { player } = loginOrCreatePlayer(name);
       const progress = getProgress(player.id);
       dispatch({ type: 'LOGIN', user: player, progress });
+      return player;
+    },
+
+    switchPlayer: (playerId) => {
+      const player = loadPlayer(playerId);
+      if (!player) return null;
+      const progress = getProgress(player.id);
+      dispatch({ type: 'LOGIN', user: player, progress });
+      return player;
     },
 
     logout: () => {
       logoutPlayer();
       dispatch({ type: 'LOGOUT' });
+    },
+
+    deleteProfile: (playerId) => {
+      const targetId = playerId || state.authUser?.id;
+      if (!targetId) return;
+      deletePlayer(targetId);
+      dispatch({ type: 'PLAYER_DIRECTORY_CHANGED' });
+      if (state.authUser?.id === targetId) {
+        dispatch({ type: 'LOGOUT' });
+      }
+    },
+
+    resetProgress: () => {
+      const targetId = state.authUser?.id;
+      if (!targetId) return;
+      resetProgress(targetId);
+      const player = loadPlayer(targetId);
+      if (player) {
+        dispatch({ type: 'LOGIN', user: player, progress: getProgress(targetId) });
+      }
+      dispatch({ type: 'PLAYER_DIRECTORY_CHANGED' });
     },
 
     setPage:    page => dispatch({ type: 'SET_PAGE', page }),

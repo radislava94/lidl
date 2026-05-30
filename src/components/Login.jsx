@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useApp } from '../store/AppContext';
+import { getAllPlayers } from '../utils/auth';
 
 export default function Login() {
-  const { actions } = useApp();
+  const { state, actions } = useApp();
   const [name,    setName]    = useState('');
   const [error,   setError]   = useState('');
+  const [notice,  setNotice]  = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPlayers, setShowPlayers] = useState(true);
+
+  const players = useMemo(() => getAllPlayers(), [state.playerDirectoryVersion]);
 
   function handleStart(e) {
     e.preventDefault();
@@ -13,11 +18,24 @@ export default function Login() {
     if (!trimmed)          { setError('Please enter your name.'); return; }
     if (trimmed.length < 2){ setError('Name must be at least 2 characters.'); return; }
     if (trimmed.length > 40){ setError('Name is too long (max 40 characters).'); return; }
+    const existing = players.find(player => String(player.name || '').trim().toLowerCase() === trimmed.toLowerCase());
+    setNotice('');
     setLoading(true);
-    // Small delay for button feedback, then create player + enter app
+    // Small delay for button feedback, then create/load player + enter app
     setTimeout(() => {
       actions.loginWithName(trimmed);
-    }, 150);
+    }, existing ? 400 : 150);
+    if (existing) {
+      setNotice(`Welcome back, ${existing.name}!`);
+    }
+  }
+
+  function handleSelectPlayer(player) {
+    setNotice(`Welcome back, ${player.name}!`);
+    setLoading(true);
+    setTimeout(() => {
+      actions.switchPlayer(player.id);
+    }, 400);
   }
 
   return (
@@ -40,6 +58,8 @@ export default function Login() {
             <span>Welcome! What&apos;s your name?</span>
           </div>
 
+          {notice && <p className="welcome-notice">{notice}</p>}
+
           <div className="auth-field">
             <div className="auth-input-wrap">
               <i className="fa fa-user auth-input-icon" />
@@ -48,7 +68,7 @@ export default function Login() {
                 className="auth-input welcome-input"
                 placeholder="e.g. Radislava"
                 value={name}
-                onChange={e => { setName(e.target.value); setError(''); }}
+                  onChange={e => { setName(e.target.value); setError(''); setNotice(''); }}
                 autoFocus
                 autoComplete="given-name"
                 maxLength={40}
@@ -68,7 +88,44 @@ export default function Login() {
               : <><i className="fa fa-play" /> Start Learning</>
             }
           </button>
+
+          <button
+            type="button"
+            className="auth-btn-secondary welcome-switch-btn"
+            onClick={() => setShowPlayers(v => !v)}
+          >
+            <i className="fa fa-users" /> Switch Player
+          </button>
         </form>
+
+        {showPlayers && (
+          <div className="player-picker">
+            <div className="player-picker-head">
+              <h2>Saved Players</h2>
+              <span>{players.length} saved</span>
+            </div>
+            {players.length ? (
+              <div className="player-list">
+                {players.map(player => (
+                  <div key={player.id} className="player-row">
+                    <button type="button" className="player-row-main" onClick={() => handleSelectPlayer(player)}>
+                      <span className="player-row-avatar">{(player.name || '?').charAt(0).toUpperCase()}</span>
+                      <span className="player-row-info">
+                        <strong>{player.name}</strong>
+                        <small>Level {player.level} · {player.xp} XP · {player.streak} streak</small>
+                      </span>
+                    </button>
+                    <button type="button" className="player-row-delete" onClick={() => actions.deleteProfile(player.id)}>
+                      <i className="fa fa-trash" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="player-picker-empty">No saved players yet. Enter your name above to create the first one.</p>
+            )}
+          </div>
+        )}
 
         {/* Feature pills */}
         <div className="auth-features">

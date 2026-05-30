@@ -230,6 +230,21 @@ function EditTab({ player, actions }) {
           {saved ? <><i className="fa fa-check" /> Saved!</> : <><i className="fa fa-save" /> Save Changes</>}
         </button>
       </form>
+
+      <div className="profile-danger-zone">
+        <div className="profile-danger-copy">
+          <h3>Player Data</h3>
+          <p>Reset this player&apos;s progress or delete the player from this device.</p>
+        </div>
+        <div className="profile-danger-actions">
+          <button type="button" className="btn-outline" onClick={actions.resetProgress}>
+            <i className="fa fa-undo" /> Reset Progress
+          </button>
+          <button type="button" className="btn-red" onClick={() => actions.deleteProfile(player.id)}>
+            <i className="fa fa-trash" /> Delete Profile
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

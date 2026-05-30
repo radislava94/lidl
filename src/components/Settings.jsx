@@ -118,27 +118,27 @@ export default function Settings() {
           </h3>
         </div>
         <p style={{ color: 'var(--text-muted)', marginBottom: 16, fontSize: '.9rem', lineHeight: 1.6 }}>
-          Your progress is stored in this browser. Logging out or resetting will clear your session.
+          Your progress is stored locally on this device. You can switch players, reset progress, or delete the current profile.
         </p>
 
         {!confirmReset ? (
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <button type="button" className="btn-outline" onClick={actions.logout}>
-              <i className="fa fa-sign-out-alt" /> Log Out
+              <i className="fa fa-users" /> Switch Player
             </button>
             <button type="button" className="btn-red" onClick={() => setConfirmReset(true)}>
-              <i className="fa fa-trash" /> Reset All Progress
+              <i className="fa fa-trash" /> Reset Current Player
             </button>
           </div>
         ) : (
           <div className="confirm-row">
             <span style={{ fontWeight: 700, color: 'var(--red)' }}>
-              ⚠️ This will delete ALL your progress!
+              ⚠️ This will delete this player&apos;s progress!
             </span>
             <button
               type="button"
               className="btn-red btn-sm"
-              onClick={() => { setConfirmReset(false); actions.logout(); }}
+              onClick={() => { setConfirmReset(false); actions.resetProgress(); }}
             >
               Yes, reset everything
             </button>
