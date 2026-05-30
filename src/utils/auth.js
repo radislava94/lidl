@@ -59,6 +59,8 @@ function toLeaderboardEntry(player, progress = {}) {
     name: player.name,
     avatarColor: player.avatarColor,
     avatarEmoji: player.avatarEmoji,
+    storeNumber: player.storeNumber ?? '',
+    role: player.role ?? '',
     xp: progress.xp ?? player.xp ?? 0,
     level: progress.level ?? player.level ?? 1,
     streak: progress.streak ?? player.streak ?? 0,
