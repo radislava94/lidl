@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { useApp } from './store/AppContext';
 import Login            from './components/Login';
 import Layout           from './components/Layout';
@@ -15,6 +16,9 @@ import DailyChallenge   from './components/DailyChallenge';
 import Settings         from './components/Settings';
 import XPPopup          from './components/shared/XPPopup';
 
+// Lazy-load the heavy ImportProducts page (pulls in xlsx / SheetJS)
+const ImportProducts = lazy(() => import('./components/ImportProducts'));
+
 const PAGES = {
   dashboard:   Dashboard,
   categories:  Categories,
@@ -28,7 +32,16 @@ const PAGES = {
   cashier:     CashierSimulator,
   daily:       DailyChallenge,
   settings:    Settings,
+  import:      ImportProducts,
 };
+
+function PageLoader() {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh', color: 'var(--text-muted)' }}>
+      <i className="fa fa-spinner fa-spin" style={{ fontSize: 28 }} />
+    </div>
+  );
+}
 
 export default function App() {
   const { state } = useApp();
@@ -40,7 +53,9 @@ export default function App() {
   return (
     <>
       <Layout>
-        <PageComponent />
+        <Suspense fallback={<PageLoader />}>
+          <PageComponent />
+        </Suspense>
       </Layout>
       <XPPopup />
     </>

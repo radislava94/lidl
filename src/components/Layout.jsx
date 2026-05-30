@@ -13,6 +13,7 @@ const NAV = [
   { page: 'progress',   icon: 'fa-chart-bar',        label: 'Progress'         },
   { page: 'mistakes',   icon: 'fa-exclamation-circle', label: 'Mistakes'       },
   { page: 'leaderboard',icon: 'fa-trophy',           label: 'Leaderboard'      },
+  { page: 'import',     icon: 'fa-file-import',      label: 'Import Products'  },
   { page: 'settings',   icon: 'fa-cog',              label: 'Settings'         },
 ];
 
