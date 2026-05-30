@@ -126,14 +126,18 @@ function RivalRow({ p, rel }) {
 export default function Leaderboard() {
   const { state, actions } = useApp();
   const [tab, setTab] = useState('all');
+  const [dbUsers, setDbUsers] = useState(null);
+
+  useEffect(() => {
+    getAllUsers().then(u => setDbUsers(u)).catch(() => setDbUsers([]));
+  }, []);
 
   const { ranked, me, myRank, above, below, topStores } = useMemo(() => {
     const myId  = state.authUser?.id;
     const myStore_ = norStore(state.store);
 
-    // Build pool from all registered users
-    const allUsers = getAllUsers();
-    let pool = allUsers.map(u => ({
+    // Build pool from all registered users (async from Supabase)
+    let pool = (dbUsers || []).map(u => ({
       id:     u.id,
       name:   u.displayName || u.username,
       av:     (u.firstName || u.username || '?').charAt(0).toUpperCase(),
@@ -173,7 +177,7 @@ export default function Leaderboard() {
     const topStores = Object.entries(sm).map(([store, xp]) => ({ store, xp })).sort((a, b) => b.xp - a.xp).slice(0, 5);
 
     return { ranked, me, myRank: me.rank, above, below, topStores };
-  }, [tab, state.authUser, state.user, state.store, state.xp, state.streak]);
+  }, [tab, dbUsers, state.authUser, state.user, state.store, state.xp, state.streak]);
 
   const top3  = ranked.slice(0, 3);
   const top10 = ranked.slice(0, 10);

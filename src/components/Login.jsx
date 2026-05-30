@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import { useApp } from '../store/AppContext';
-import {
-  registerUser, loginUser,
-  verifySecurityAnswer, resetPassword,
-  SECURITY_QUESTIONS,
-} from '../utils/auth';
+import { registerUser, loginUser, resetPasswordByEmail } from '../utils/auth';
 
 // ─── Tab types ────────────────────────────────────────────────────────────────
 const TAB_LOGIN    = 'login';
@@ -53,7 +48,6 @@ export default function Login() {
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
 function LoginForm({ onForgot }) {
-  const { actions } = useApp();
   const [identity,   setIdentity]   = useState('');
   const [password,   setPassword]   = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -67,10 +61,11 @@ function LoginForm({ onForgot }) {
     if (!identity.trim()) { setError('Enter your username or email.'); return; }
     if (!password)        { setError('Enter your password.'); return; }
     setLoading(true);
-    const result = await loginUser(identity.trim(), password, rememberMe);
+    // onAuthStateChange in AppContext will update global state on success
+    const result = await loginUser(identity.trim(), password);
     setLoading(false);
-    if (result.error) { setError(result.error); return; }
-    actions.loginWithUser(result.user);
+    if (result.error) setError(result.error);
+    // No loginWithUser() call needed — Supabase fires onAuthStateChange
   }
 
   return (
@@ -117,15 +112,14 @@ function LoginForm({ onForgot }) {
 
 // ─── REGISTER ─────────────────────────────────────────────────────────────────
 function RegisterForm({ onSwitch }) {
-  const { actions } = useApp();
   const [form, setForm] = useState({
     firstName: '', lastName: '', username: '', email: '',
     password: '', confirmPassword: '', storeNumber: '',
-    securityQuestion: SECURITY_QUESTIONS[0], securityAnswer: '',
   });
-  const [showPass, setShowPass] = useState(false);
-  const [error,    setError]    = useState('');
-  const [loading,  setLoading]  = useState(false);
+  const [showPass, setShowPass]   = useState(false);
+  const [error,    setError]      = useState('');
+  const [loading,  setLoading]    = useState(false);
+  const [success,  setSuccess]    = useState(false);
 
   function set(k, v) { setForm(f => ({ ...f, [k]: v })); setError(''); }
 
@@ -139,13 +133,29 @@ function RegisterForm({ onSwitch }) {
     if (!form.email.trim() || !form.email.includes('@')) { setError('Valid email is required.'); return; }
     if (form.password.length < 6)               { setError('Password must be at least 6 characters.'); return; }
     if (form.password !== form.confirmPassword) { setError('Passwords do not match.'); return; }
-    if (!form.securityAnswer.trim())            { setError('Security answer is required.'); return; }
 
     setLoading(true);
     const result = await registerUser(form);
     setLoading(false);
+
     if (result.error) { setError(result.error); return; }
-    actions.loginWithUser(result.user);
+    if (result.needsConfirmation) { setSuccess(true); return; }
+    // If email confirmation is disabled in Supabase, onAuthStateChange fires login automatically
+  }
+
+  if (success) {
+    return (
+      <div className="auth-form">
+        <div className="auth-success-box">
+          <i className="fa fa-envelope fa-2x" style={{ color: 'var(--blue)', marginBottom: 12 }} />
+          <h3>Check your email!</h3>
+          <p>We sent a confirmation link to <strong>{form.email}</strong>.<br />Click it to activate your account, then come back to sign in.</p>
+          <button type="button" className="auth-btn-primary" style={{ marginTop: 16 }} onClick={onSwitch}>
+            Go to Sign In
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -220,26 +230,6 @@ function RegisterForm({ onSwitch }) {
         </div>
       </div>
 
-      <div className="auth-field">
-        <label className="auth-label">Security Question</label>
-        <div className="auth-input-wrap">
-          <i className="fa fa-question-circle auth-input-icon" />
-          <select className="auth-input" value={form.securityQuestion}
-            onChange={e => set('securityQuestion', e.target.value)}>
-            {SECURITY_QUESTIONS.map(q => <option key={q}>{q}</option>)}
-          </select>
-        </div>
-      </div>
-
-      <div className="auth-field">
-        <label className="auth-label">Security Answer</label>
-        <div className="auth-input-wrap">
-          <i className="fa fa-key auth-input-icon" />
-          <input className="auth-input" placeholder="Used to reset your password"
-            value={form.securityAnswer} onChange={e => set('securityAnswer', e.target.value)} />
-        </div>
-      </div>
-
       {error && <p className="auth-error"><i className="fa fa-exclamation-circle" /> {error}</p>}
 
       <button type="submit" className="auth-btn-primary" disabled={loading}>
@@ -256,41 +246,20 @@ function RegisterForm({ onSwitch }) {
 
 // ─── FORGOT PASSWORD ──────────────────────────────────────────────────────────
 function ForgotForm({ onBack }) {
-  const [step,     setStep]    = useState(1);
-  const [username, setUsername] = useState('');
-  const [question, setQuestion] = useState('');
-  const [answer,   setAnswer]  = useState('');
-  const [newPass,  setNewPass] = useState('');
-  const [confirm,  setConfirm] = useState('');
-  const [error,    setError]   = useState('');
-  const [loading,  setLoading] = useState(false);
+  const [email,   setEmail]   = useState('');
+  const [sent,    setSent]    = useState(false);
+  const [error,   setError]   = useState('');
+  const [loading, setLoading] = useState(false);
 
-  function handleUsername(e) {
-    e.preventDefault(); setError('');
-    if (!username.trim()) { setError('Enter your username.'); return; }
-    const users = JSON.parse(localStorage.getItem('plu_users') || '{}');
-    const user  = users[username.toLowerCase()];
-    if (!user) { setError('Username not found.'); return; }
-    setQuestion(user.securityQuestion);
-    setStep(2);
-  }
-
-  async function handleAnswer(e) {
-    e.preventDefault(); setError(''); setLoading(true);
-    const result = await verifySecurityAnswer(username.trim(), answer);
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError('');
+    if (!email.trim() || !email.includes('@')) { setError('Enter a valid email address.'); return; }
+    setLoading(true);
+    const result = await resetPasswordByEmail(email.trim());
     setLoading(false);
     if (result.error) { setError(result.error); return; }
-    setStep(3);
-  }
-
-  async function handleReset(e) {
-    e.preventDefault(); setError('');
-    if (newPass.length < 6)    { setError('Password must be at least 6 characters.'); return; }
-    if (newPass !== confirm)   { setError('Passwords do not match.'); return; }
-    setLoading(true);
-    await resetPassword(username.trim(), newPass);
-    setLoading(false);
-    setStep(4);
+    setSent(true);
   }
 
   return (
@@ -300,69 +269,34 @@ function ForgotForm({ onBack }) {
       </button>
       <h2 className="auth-section-title">Reset Password</h2>
 
-      {step === 1 && (
-        <form onSubmit={handleUsername} noValidate>
-          <div className="auth-field">
-            <label className="auth-label">Your Username</label>
-            <div className="auth-input-wrap">
-              <i className="fa fa-user auth-input-icon" />
-              <input className="auth-input" placeholder="radislava94" value={username}
-                onChange={e => { setUsername(e.target.value); setError(''); }} />
-            </div>
-          </div>
-          {error && <p className="auth-error">{error}</p>}
-          <button type="submit" className="auth-btn-primary">Continue <i className="fa fa-arrow-right" /></button>
-        </form>
-      )}
-
-      {step === 2 && (
-        <form onSubmit={handleAnswer} noValidate>
-          <p className="auth-question-label">{question}</p>
-          <div className="auth-field">
-            <div className="auth-input-wrap">
-              <i className="fa fa-key auth-input-icon" />
-              <input className="auth-input" placeholder="Your answer"
-                value={answer} onChange={e => { setAnswer(e.target.value); setError(''); }} />
-            </div>
-          </div>
-          {error && <p className="auth-error">{error}</p>}
-          <button type="submit" className="auth-btn-primary" disabled={loading}>
-            {loading ? <i className="fa fa-spinner fa-spin" /> : <>Verify <i className="fa fa-check" /></>}
+      {sent ? (
+        <div className="auth-success-box">
+          <i className="fa fa-envelope fa-2x" style={{ color: 'var(--blue)', marginBottom: 12 }} />
+          <h3>Check your inbox</h3>
+          <p>We sent a password reset link to <strong>{email}</strong>.<br />Follow the link to set a new password.</p>
+          <button type="button" className="auth-btn-primary" style={{ marginTop: 16 }} onClick={onBack}>
+            Back to Sign In
           </button>
-        </form>
-      )}
-
-      {step === 3 && (
-        <form onSubmit={handleReset} noValidate>
-          <div className="auth-field">
-            <label className="auth-label">New Password</label>
-            <div className="auth-input-wrap">
-              <i className="fa fa-lock auth-input-icon" />
-              <input className="auth-input" type="password" placeholder="Min. 6 characters"
-                value={newPass} onChange={e => { setNewPass(e.target.value); setError(''); }} />
-            </div>
-          </div>
-          <div className="auth-field">
-            <label className="auth-label">Confirm New Password</label>
-            <div className="auth-input-wrap">
-              <i className="fa fa-lock auth-input-icon" />
-              <input className="auth-input" type="password" placeholder="Repeat password"
-                value={confirm} onChange={e => { setConfirm(e.target.value); setError(''); }} />
-            </div>
-          </div>
-          {error && <p className="auth-error">{error}</p>}
-          <button type="submit" className="auth-btn-primary" disabled={loading}>
-            {loading ? <i className="fa fa-spinner fa-spin" /> : <>Set New Password <i className="fa fa-check" /></>}
-          </button>
-        </form>
-      )}
-
-      {step === 4 && (
-        <div className="auth-success">
-          <div className="auth-success-icon">✅</div>
-          <p>Password reset successfully!</p>
-          <button type="button" className="auth-btn-primary" onClick={onBack}>Sign In Now</button>
         </div>
+      ) : (
+        <form onSubmit={handleSubmit} noValidate>
+          <p style={{ marginBottom: 16, color: 'var(--text-muted)', fontSize: 14 }}>
+            Enter the email address for your account and we&apos;ll send you a reset link.
+          </p>
+          <div className="auth-field">
+            <label className="auth-label">Email Address</label>
+            <div className="auth-input-wrap">
+              <i className="fa fa-envelope auth-input-icon" />
+              <input className="auth-input" type="email" placeholder="you@example.com"
+                value={email} onChange={e => { setEmail(e.target.value); setError(''); }}
+                autoComplete="email" />
+            </div>
+          </div>
+          {error && <p className="auth-error"><i className="fa fa-exclamation-circle" /> {error}</p>}
+          <button type="submit" className="auth-btn-primary" disabled={loading}>
+            {loading ? <i className="fa fa-spinner fa-spin" /> : <><i className="fa fa-paper-plane" /> Send Reset Link</>}
+          </button>
+        </form>
       )}
     </div>
   );

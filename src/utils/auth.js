@@ -1,229 +1,284 @@
 /**
- * auth.js — Multi-user authentication & storage system
+ * auth.js — Supabase-based authentication & user data
  *
- * Architecture:
- *   localStorage['plu_users']          → { [username]: UserRecord }
- *   localStorage['plu_session']        → { username, rememberMe }
- *   localStorage['plu_progress_<id>']  → UserProgress (per-user)
- *
- * Supabase migration: replace the functions below with Supabase calls.
- * The shape of UserRecord and UserProgress stays identical.
+ * Tables (run SQL in Supabase SQL Editor — see README):
+ *   public.profiles       — user profile info
+ *   public.user_progress  — per-user game progress (XP, level, etc.)
  */
+import { supabase } from './supabaseClient';
 
-// ─── Keys ────────────────────────────────────────────────────────────────────
-const USERS_KEY    = 'plu_users';
-const SESSION_KEY  = 'plu_session';
-const progressKey  = id => `plu_progress_${id}`;
+// ─── Register ─────────────────────────────────────────────────────────────────
+export async function registerUser({ firstName, lastName, username, email, password, storeNumber }) {
+  // Check username uniqueness (profiles is publicly readable)
+  const { data: existingUser } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('username', username.toLowerCase())
+    .maybeSingle();
 
-// ─── Crypto: SHA-256 hash password ───────────────────────────────────────────
-export async function hashPassword(password) {
-  const encoded = new TextEncoder().encode(password);
-  const hash    = await crypto.subtle.digest('SHA-256', encoded);
-  return Array.from(new Uint8Array(hash))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
-}
+  if (existingUser) return { error: 'Username already taken.' };
 
-// ─── Users registry ──────────────────────────────────────────────────────────
-function getUsers() {
-  try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
-  catch { return {}; }
-}
-function saveUsers(users) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
-
-/** Create a new user record */
-export async function registerUser({ firstName, lastName, username, email, password, storeNumber, securityQuestion, securityAnswer }) {
-  const users = getUsers();
-
-  if (users[username.toLowerCase()])
-    return { error: 'Username already taken.' };
-  if (Object.values(users).some(u => u.email === email.toLowerCase()))
-    return { error: 'Email already registered.' };
-
-  const passwordHash = await hashPassword(password);
-  const answerHash   = await hashPassword(securityAnswer.toLowerCase().trim());
-
-  const id = `${username.toLowerCase()}_${Date.now()}`;
-  const now = new Date().toISOString();
-
-  /** @type {UserRecord} */
-  const user = {
-    id,
-    firstName,
-    lastName,
-    username: username.toLowerCase(),
-    displayName: `${firstName} ${lastName}`,
+  // Supabase Auth signup
+  const { data: authData, error: authError } = await supabase.auth.signUp({
     email: email.toLowerCase(),
-    passwordHash,
-    storeNumber: storeNumber || '',
-    role: '',
-    avatarColor: randomColor(),
-    avatarEmoji: '',
-    createdAt: now,
-    lastLoginAt: now,
-    securityQuestion,
-    securityAnswerHash: answerHash,
-  };
-
-  users[username.toLowerCase()] = user;
-  saveUsers(users);
-
-  // Initialise empty progress for this user
-  saveProgress(id, defaultProgress());
-
-  return { user };
-}
-
-/** Sign in with username + password */
-export async function loginUser(usernameOrEmail, password, rememberMe = false) {
-  const users = getUsers();
-  const hash  = usernameOrEmail.toLowerCase();
-
-  const user =
-    users[hash] ??
-    Object.values(users).find(u => u.email === hash);
-
-  if (!user) return { error: 'No account found with that username or email.' };
-
-  const passwordHash = await hashPassword(password);
-  if (user.passwordHash !== passwordHash)
-    return { error: 'Incorrect password.' };
-
-  // Update last login
-  user.lastLoginAt = new Date().toISOString();
-  users[user.username] = user;
-  saveUsers(users);
-
-  // Write session
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ userId: user.id, username: user.username, rememberMe }));
-
-  return { user };
-}
-
-/** Restore session from localStorage (called on app boot) */
-export function restoreSession() {
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    if (!raw) return null;
-    const session = JSON.parse(raw);
-    const users = getUsers();
-    const user = Object.values(users).find(u => u.id === session.userId);
-    return user ?? null;
-  } catch { return null; }
-}
-
-/** Clear session (logout) */
-export function logoutUser() {
-  localStorage.removeItem(SESSION_KEY);
-}
-
-/** Verify security answer for password reset */
-export async function verifySecurityAnswer(username, answer) {
-  const users = getUsers();
-  const user = users[username.toLowerCase()];
-  if (!user) return { error: 'Username not found.' };
-  const hash = await hashPassword(answer.toLowerCase().trim());
-  if (hash !== user.securityAnswerHash) return { error: 'Incorrect answer.' };
-  return { user };
-}
-
-/** Change password after security verification */
-export async function resetPassword(username, newPassword) {
-  const users = getUsers();
-  const user = users[username.toLowerCase()];
-  if (!user) return { error: 'Username not found.' };
-  user.passwordHash = await hashPassword(newPassword);
-  users[username.toLowerCase()] = user;
-  saveUsers(users);
-  return { ok: true };
-}
-
-/** Update profile fields (firstName, lastName, avatarColor, avatarEmoji, storeNumber, role) */
-export function updateProfile(userId, fields) {
-  const users = getUsers();
-  const user = Object.values(users).find(u => u.id === userId);
-  if (!user) return;
-  const allowed = ['firstName','lastName','displayName','avatarColor','avatarEmoji','storeNumber','role'];
-  allowed.forEach(k => { if (k in fields) user[k] = fields[k]; });
-  if (fields.firstName || fields.lastName) {
-    user.displayName = `${user.firstName} ${user.lastName}`;
-  }
-  users[user.username] = user;
-  saveUsers(users);
-  return user;
-}
-
-/** Change password when already logged in */
-export async function changePassword(userId, currentPassword, newPassword) {
-  const users = getUsers();
-  const user = Object.values(users).find(u => u.id === userId);
-  if (!user) return { error: 'User not found.' };
-  const currentHash = await hashPassword(currentPassword);
-  if (currentHash !== user.passwordHash) return { error: 'Current password is incorrect.' };
-  user.passwordHash = await hashPassword(newPassword);
-  users[user.username] = user;
-  saveUsers(users);
-  return { ok: true };
-}
-
-/** Get all users (for leaderboard) */
-export function getAllUsers() {
-  const users = getUsers();
-  return Object.values(users).map(u => {
-    const progress = getProgress(u.id);
-    return { ...u, progress };
+    password,
+    options: {
+      data: { first_name: firstName, last_name: lastName, username: username.toLowerCase() },
+    },
   });
+
+  if (authError) {
+    if (authError.message.toLowerCase().includes('already registered')) return { error: 'Email already registered.' };
+    return { error: authError.message };
+  }
+
+  const userId = authData.user.id;
+  const color  = randomColor();
+
+  // Insert profile row
+  const { error: profileError } = await supabase.from('profiles').insert({
+    id:           userId,
+    first_name:   firstName,
+    last_name:    lastName,
+    display_name: `${firstName} ${lastName}`,
+    username:     username.toLowerCase(),
+    email:        email.toLowerCase(),
+    store_number: storeNumber || '',
+    role:         '',
+    avatar_color: color,
+    avatar_emoji: '',
+  });
+  if (profileError) return { error: profileError.message };
+
+  // Insert empty progress row
+  await supabase.from('user_progress').insert({ id: userId });
+
+  // If email confirmation is required, the session won't be set yet
+  if (!authData.session) return { needsConfirmation: true };
+
+  const profile = await getUserProfile(userId);
+  return { user: profile };
 }
 
-// ─── Per-user progress ───────────────────────────────────────────────────────
-function defaultProgress() {
+// ─── Login ────────────────────────────────────────────────────────────────────
+export async function loginUser(usernameOrEmail, password) {
+  let email = usernameOrEmail.trim();
+
+  // If not an email address, look up email by username
+  if (!email.includes('@')) {
+    const { data: profileData } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('username', email.toLowerCase())
+      .maybeSingle();
+
+    if (!profileData) return { error: 'No account found with that username.' };
+    email = profileData.email;
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    if (error.message.toLowerCase().includes('invalid login')) return { error: 'Incorrect email or password.' };
+    return { error: error.message };
+  }
+
+  const profile = await getUserProfile(data.user.id);
+  return { user: profile };
+}
+
+// ─── Logout ───────────────────────────────────────────────────────────────────
+export async function logoutUser() {
+  await supabase.auth.signOut();
+}
+
+// ─── Auth state listener ──────────────────────────────────────────────────────
+export function onAuthStateChange(callback) {
+  return supabase.auth.onAuthStateChange(callback);
+}
+
+// ─── Profile ──────────────────────────────────────────────────────────────────
+export async function getUserProfile(userId) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  if (error || !data) return null;
+  return formatProfile(data);
+}
+
+function formatProfile(row) {
   return {
-    xp: 0,
-    level: 1,
-    streak: 0,
-    lastActiveDate: null,
-    masteredPLUs: {},
-    favorites: {},
-    mistakes: {},
-    totalCorrect: 0,
-    totalAnswered: 0,
-    quizzesPlayed: 0,
-    studyMinutes: 0,
-    learnedToday: 0,
-    dailyGoal: 10,
-    dailyChallengeDate: null,
-    achievements: [],
-    isDarkMode: false,
-    currentPage: 'dashboard',
+    id:          row.id,
+    firstName:   row.first_name   || '',
+    lastName:    row.last_name    || '',
+    displayName: row.display_name || `${row.first_name} ${row.last_name}`,
+    username:    row.username     || '',
+    email:       row.email        || '',
+    storeNumber: row.store_number || '',
+    role:        row.role         || '',
+    avatarColor: row.avatar_color || '#0050AA',
+    avatarEmoji: row.avatar_emoji || '',
+    createdAt:   row.created_at,
   };
 }
 
-export function getProgress(userId) {
-  try {
-    const raw = localStorage.getItem(progressKey(userId));
-    if (!raw) return defaultProgress();
-    return { ...defaultProgress(), ...JSON.parse(raw) };
-  } catch { return defaultProgress(); }
+export async function updateProfile(userId, fields) {
+  const updates = {};
+  if ('firstName'   in fields) updates.first_name   = fields.firstName;
+  if ('lastName'    in fields) updates.last_name     = fields.lastName;
+  if ('storeNumber' in fields) updates.store_number  = fields.storeNumber;
+  if ('role'        in fields) updates.role          = fields.role;
+  if ('avatarColor' in fields) updates.avatar_color  = fields.avatarColor;
+  if ('avatarEmoji' in fields) updates.avatar_emoji  = fields.avatarEmoji;
+  if (fields.firstName !== undefined && fields.lastName !== undefined) {
+    updates.display_name = `${fields.firstName} ${fields.lastName}`;
+  }
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update(updates)
+    .eq('id', userId)
+    .select()
+    .single();
+
+  if (error) return null;
+  return formatProfile(data);
 }
+
+// ─── Password ─────────────────────────────────────────────────────────────────
+export async function changePassword(currentPassword, newPassword) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: 'Not authenticated.' };
+
+  // Verify current password by re-authenticating
+  const { error: checkError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: currentPassword,
+  });
+  if (checkError) return { error: 'Current password is incorrect.' };
+
+  const { error } = await supabase.auth.updateUser({ password: newPassword });
+  if (error) return { error: error.message };
+  return { ok: true };
+}
+
+export async function resetPasswordByEmail(email) {
+  const { error } = await supabase.auth.resetPasswordForEmail(email.toLowerCase(), {
+    redirectTo: `${window.location.origin}`,
+  });
+  if (error) return { error: error.message };
+  return { ok: true };
+}
+
+// ─── Progress ─────────────────────────────────────────────────────────────────
+const defaultProgress = () => ({
+  xp: 0, level: 1, streak: 0, lastActiveDate: null,
+  masteredPLUs: {}, favorites: {}, mistakes: {},
+  totalCorrect: 0, totalAnswered: 0, quizzesPlayed: 0,
+  studyMinutes: 0, learnedToday: 0, dailyGoal: 10,
+  dailyChallengeDate: null, achievements: [], _perfectStreak: 0,
+  isDarkMode: false,
+});
+
+export async function getProgress(userId) {
+  const { data, error } = await supabase
+    .from('user_progress')
+    .select('*')
+    .eq('id', userId)
+    .maybeSingle();
+
+  if (error || !data) return defaultProgress();
+
+  return {
+    xp:                 data.xp                 ?? 0,
+    level:              data.level               ?? 1,
+    streak:             data.streak              ?? 0,
+    lastActiveDate:     data.last_active_date    ?? null,
+    masteredPLUs:       data.mastered_plus       ?? {},
+    favorites:          data.favorites           ?? {},
+    mistakes:           data.mistakes            ?? {},
+    totalCorrect:       data.total_correct       ?? 0,
+    totalAnswered:      data.total_answered      ?? 0,
+    quizzesPlayed:      data.quizzes_played      ?? 0,
+    studyMinutes:       data.study_minutes       ?? 0,
+    learnedToday:       data.learned_today       ?? 0,
+    dailyGoal:          data.daily_goal          ?? 10,
+    dailyChallengeDate: data.daily_challenge_date ?? null,
+    achievements:       data.achievements        ?? [],
+    _perfectStreak:     data.perfect_streak      ?? 0,
+    isDarkMode:         data.is_dark_mode        ?? false,
+  };
+}
+
+let _saveTimer = null;
 
 export function saveProgress(userId, progress) {
+  // Immediate localStorage cache (keeps UI snappy)
   try {
-    // Don't store ephemeral UI keys
-    const { products, categories, isLoadingProducts, xpPopup, ...rest } = progress;
-    localStorage.setItem(progressKey(userId), JSON.stringify(rest));
-  } catch { /* quota exceeded */ }
+    const { products, categories, isLoadingProducts, xpPopup, authUser, ...rest } = progress;
+    localStorage.setItem(`plu_progress_${userId}`, JSON.stringify(rest));
+  } catch { /* quota */ }
+
+  // Debounced Supabase upsert (2 s after last change)
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => _flushToSupabase(userId, progress), 2000);
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+async function _flushToSupabase(userId, progress) {
+  try {
+    const { products, categories, isLoadingProducts, xpPopup, authUser, currentPage, ...rest } = progress;
+    await supabase.from('user_progress').upsert({
+      id:                   userId,
+      xp:                   rest.xp                ?? 0,
+      level:                rest.level              ?? 1,
+      streak:               rest.streak             ?? 0,
+      last_active_date:     rest.lastActiveDate     ?? null,
+      mastered_plus:        rest.masteredPLUs       ?? {},
+      favorites:            rest.favorites          ?? {},
+      mistakes:             rest.mistakes           ?? {},
+      total_correct:        rest.totalCorrect       ?? 0,
+      total_answered:       rest.totalAnswered      ?? 0,
+      quizzes_played:       rest.quizzesPlayed      ?? 0,
+      study_minutes:        rest.studyMinutes       ?? 0,
+      learned_today:        rest.learnedToday       ?? 0,
+      daily_goal:           rest.dailyGoal          ?? 10,
+      daily_challenge_date: rest.dailyChallengeDate ?? null,
+      achievements:         rest.achievements       ?? [],
+      perfect_streak:       rest._perfectStreak     ?? 0,
+      is_dark_mode:         rest.isDarkMode         ?? false,
+      updated_at:           new Date().toISOString(),
+    });
+  } catch { /* network error — data is safe in localStorage */ }
+}
+
+// ─── Leaderboard ──────────────────────────────────────────────────────────────
+export async function getAllUsers() {
+  try {
+    const [profilesRes, progressRes] = await Promise.all([
+      supabase.from('profiles').select('*'),
+      supabase.from('user_progress').select('id, xp, level, streak, achievements, quizzes_played, total_correct, total_answered'),
+    ]);
+
+    if (profilesRes.error) throw profilesRes.error;
+
+    const progressMap = {};
+    (progressRes.data || []).forEach(p => { progressMap[p.id] = p; });
+
+    return (profilesRes.data || []).map(u => ({
+      ...formatProfile(u),
+      progress: progressMap[u.id] ?? { xp: 0, level: 1, streak: 0 },
+    }));
+  } catch {
+    return [];
+  }
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 const COLORS = ['#0050AA','#e63946','#2ec4b6','#f4a261','#9b5de5','#06d6a0','#ef476f','#118ab2'];
 function randomColor() { return COLORS[Math.floor(Math.random() * COLORS.length)]; }
 
-export const SECURITY_QUESTIONS = [
-  "What was the name of your first pet?",
-  "What city were you born in?",
-  "What is your mother's maiden name?",
-  "What was the name of your first school?",
-  "What is your favourite film?",
-];
+// Keep this export for backward compat with Login.jsx (registration no longer uses it but it's imported)
+export const SECURITY_QUESTIONS = [];
+

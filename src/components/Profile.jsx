@@ -267,7 +267,7 @@ function SecurityTab({ user }) {
     if (newPass.length < 6)   { setError('New password must be at least 6 characters.'); return; }
     if (newPass !== confirm)  { setError('Passwords do not match.'); return; }
     setLoading(true);
-    const result = await changePassword(user.id, current, newPass);
+    const result = await changePassword(current, newPass);
     setLoading(false);
     if (result.error) { setError(result.error); return; }
     setSuccess('Password changed successfully!');

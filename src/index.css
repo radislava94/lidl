@@ -1672,6 +1672,17 @@
 }
 [data-theme="dark"] .auth-switch { color: #7aaed4; }
 
+.auth-success-box {
+  text-align: center;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.auth-success-box h3 { font-size: 1.15rem; font-weight: 800; color: var(--blue); margin: 0; }
+.auth-success-box p  { font-size: .9rem; color: var(--text-muted); line-height: 1.55; margin: 0; }
+
 /* Forgot password flow */
 .auth-back-btn {
   background: none;
