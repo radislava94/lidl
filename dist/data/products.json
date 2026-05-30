@@ -1,0 +1,2054 @@
+[
+  {
+    "plu": "1",
+    "name": "Банани",
+    "nameEn": "Bananas",
+    "category": "fruits",
+    "difficulty": "easy",
+    "emoji": "🍌",
+    "image": ""
+  },
+  {
+    "plu": "2",
+    "name": "Краставици за бр.",
+    "nameEn": "Краставици за бр.",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🥒",
+    "image": ""
+  },
+  {
+    "plu": "3",
+    "name": "Салата Айсберг за бр.",
+    "nameEn": "Салата Айсберг за бр.",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "5",
+    "name": "Домати на клонка на кг",
+    "nameEn": "Vine Tomatoes per kg",
+    "category": "vegetables",
+    "emoji": "🍅",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "7",
+    "name": "Моркови 1кг опаковка",
+    "nameEn": "Carrots 1kg pack",
+    "category": "vegetables",
+    "emoji": "🥕",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "12",
+    "name": "Зеле на кг",
+    "nameEn": "Cabbage per kg",
+    "category": "vegetables",
+    "emoji": "🥬",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "13",
+    "name": "Броколи 500 г",
+    "nameEn": "Broccoli 500g",
+    "category": "vegetables",
+    "emoji": "🥦",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "15",
+    "name": "Целина на кг",
+    "nameEn": "Celery per kg",
+    "category": "vegetables",
+    "emoji": "🥬",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "18",
+    "name": "Чушки, зелени, Калифорния на кг",
+    "nameEn": "California Green Peppers per kg",
+    "category": "vegetables",
+    "emoji": "🫑",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "19",
+    "name": "Зелени чушки Долма",
+    "nameEn": "Зелени чушки Долма",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🫑",
+    "image": ""
+  },
+  {
+    "plu": "20",
+    "name": "Чушки, червени на кг",
+    "nameEn": "Red Peppers per kg",
+    "category": "vegetables",
+    "emoji": "🫑",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "21",
+    "name": "Тиквички, тъмни на кг",
+    "nameEn": "Dark Zucchini per kg",
+    "category": "vegetables",
+    "emoji": "🥒",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "22",
+    "name": "Патладжани",
+    "nameEn": "Eggplants",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🍆",
+    "image": ""
+  },
+  {
+    "plu": "24",
+    "name": "Тиква матилда на кг",
+    "nameEn": "Matilda Pumpkin per kg",
+    "category": "vegetables",
+    "emoji": "🎃",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "28",
+    "name": "Грейпфрут на кг",
+    "nameEn": "Grapefruit per kg",
+    "category": "fruits",
+    "emoji": "🍊",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "30",
+    "name": "Червени ябълки на кг",
+    "nameEn": "Red Apples per kg",
+    "category": "fruits",
+    "emoji": "🍎",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "32",
+    "name": "Зелени ябълки",
+    "nameEn": "Green Apples",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍏",
+    "image": ""
+  },
+  {
+    "plu": "33",
+    "name": "Круши на кг",
+    "nameEn": "Pears per kg",
+    "category": "fruits",
+    "emoji": "🍐",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "34",
+    "name": "Бяло грозде без семки на кг",
+    "nameEn": "White Seedless Grapes per kg",
+    "category": "fruits",
+    "emoji": "🍇",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "36",
+    "name": "Ананас",
+    "nameEn": "Pineapple",
+    "category": "fruits",
+    "difficulty": "easy",
+    "emoji": "🍍",
+    "image": ""
+  },
+  {
+    "plu": "37",
+    "name": "Манго",
+    "nameEn": "Mango",
+    "category": "fruits",
+    "difficulty": "easy",
+    "emoji": "🥭",
+    "image": ""
+  },
+  {
+    "plu": "38",
+    "name": "Авокадо",
+    "nameEn": "Avocado",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🥑",
+    "image": ""
+  },
+  {
+    "plu": "39",
+    "name": "Нар за бр",
+    "nameEn": "Pomegranate per piece",
+    "category": "fruits",
+    "emoji": "🍎",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "41",
+    "name": "Гъби Печурка",
+    "nameEn": "Button Mushrooms",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🍄",
+    "image": ""
+  },
+  {
+    "plu": "44",
+    "name": "Пресен лук връзка",
+    "nameEn": "Spring Onion",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🌿",
+    "image": ""
+  },
+  {
+    "plu": "45",
+    "name": "Репички връзка",
+    "nameEn": "Radish Bunch",
+    "category": "vegetables",
+    "emoji": "🌿",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "47",
+    "name": "Пресен чесън връзка",
+    "nameEn": "Fresh Garlic Bunch",
+    "category": "vegetables",
+    "emoji": "🧄",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "52",
+    "name": "Домати на клонка на кг",
+    "nameEn": "Домати на клонка на кг",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "53",
+    "name": "Пъпеш Галя",
+    "nameEn": "Galia Melon",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍈",
+    "image": ""
+  },
+  {
+    "plu": "55",
+    "name": "Дини",
+    "nameEn": "Watermelons",
+    "category": "fruits",
+    "difficulty": "easy",
+    "emoji": "🍉",
+    "image": ""
+  },
+  {
+    "plu": "60",
+    "name": "Домати Суийт Марманде на кг",
+    "nameEn": "Sweet Marmande Tomatoes per kg",
+    "category": "vegetables",
+    "emoji": "🍅",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "61",
+    "name": "Чери домати на клонка 500 г",
+    "nameEn": "Cherry Vine Tomatoes 500g",
+    "category": "vegetables",
+    "emoji": "🍅",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "62",
+    "name": "Розови домати на кг",
+    "nameEn": "Pink Tomatoes per kg",
+    "category": "vegetables",
+    "emoji": "🍅",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "68",
+    "name": "Царевица",
+    "nameEn": "Corn",
+    "category": "vegetables",
+    "difficulty": "easy",
+    "emoji": "🌽",
+    "image": ""
+  },
+  {
+    "plu": "73",
+    "name": "Копър",
+    "nameEn": "Dill",
+    "category": "vegetables",
+    "emoji": "🌿",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "76",
+    "name": "Зелен алабаш за бр.",
+    "nameEn": "Green Kohlrabi per piece",
+    "category": "vegetables",
+    "emoji": "🥬",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "77",
+    "name": "Джинджифил",
+    "nameEn": "Ginger",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🫚",
+    "image": ""
+  },
+  {
+    "plu": "84",
+    "name": "Червен лук",
+    "nameEn": "Red Onion",
+    "category": "vegetables",
+    "difficulty": "easy",
+    "emoji": "🧅",
+    "image": ""
+  },
+  {
+    "plu": "89",
+    "name": "Сини сливи на кг",
+    "nameEn": "Сини сливи на кг",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍎",
+    "image": ""
+  },
+  {
+    "plu": "91",
+    "name": "Сливи",
+    "nameEn": "Plums",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍇",
+    "image": ""
+  },
+  {
+    "plu": "113",
+    "name": "Лилави сладки картофи на кг",
+    "nameEn": "Purple Sweet Potatoes per kg",
+    "category": "vegetables",
+    "emoji": "🍠",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "116",
+    "name": "Червен картоф на кг",
+    "nameEn": "Червен картоф на кг",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🥔",
+    "image": ""
+  },
+  {
+    "plu": "117",
+    "name": "Сладки картофи",
+    "nameEn": "Sweet Potatoes",
+    "category": "vegetables",
+    "difficulty": "easy",
+    "emoji": "🍠",
+    "image": ""
+  },
+  {
+    "plu": "118",
+    "name": "Тиквички",
+    "nameEn": "Zucchini",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🥒",
+    "image": ""
+  },
+  {
+    "plu": "119",
+    "name": "Червени мити картофи на кг",
+    "nameEn": "Washed Red Potatoes per kg",
+    "category": "vegetables",
+    "emoji": "🥔",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "125",
+    "name": "Шарени патладжани",
+    "nameEn": "Striped Eggplants",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🍆",
+    "image": ""
+  },
+  {
+    "plu": "138",
+    "name": "Романеско",
+    "nameEn": "Romanesco",
+    "category": "vegetables",
+    "emoji": "🥦",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "141",
+    "name": "Ранно зеле на кг",
+    "nameEn": "Early Cabbage per kg",
+    "category": "vegetables",
+    "emoji": "🥬",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "171",
+    "name": "Моркови връзка",
+    "nameEn": "Carrot Bunch",
+    "category": "vegetables",
+    "emoji": "🥕",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "181",
+    "name": "Зелени чушки",
+    "nameEn": "Green Peppers",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🫑",
+    "image": ""
+  },
+  {
+    "plu": "202",
+    "name": "Краставици на кг",
+    "nameEn": "Cucumbers per kg",
+    "category": "vegetables",
+    "emoji": "🥒",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "205",
+    "name": "Бейби Бапи",
+    "nameEn": "Baby Bappi Peppers",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🫑",
+    "image": ""
+  },
+  {
+    "plu": "211",
+    "name": "Праскови",
+    "nameEn": "Peaches",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "212",
+    "name": "Праскови на кг",
+    "nameEn": "Праскови на кг",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "223",
+    "name": "Чесън",
+    "nameEn": "Garlic",
+    "category": "vegetables",
+    "difficulty": "easy",
+    "emoji": "🧄",
+    "image": ""
+  },
+  {
+    "plu": "233",
+    "name": "Папая",
+    "nameEn": "Papaya",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🥭",
+    "image": ""
+  },
+  {
+    "plu": "251",
+    "name": "Лимони на кг",
+    "nameEn": "Lemons per kg",
+    "category": "fruits",
+    "emoji": "🍋",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "252",
+    "name": "Лайм",
+    "nameEn": "Lime",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍋",
+    "image": ""
+  },
+  {
+    "plu": "261",
+    "name": "Лимони",
+    "nameEn": "Lemons",
+    "category": "fruits",
+    "difficulty": "easy",
+    "emoji": "🍋",
+    "image": ""
+  },
+  {
+    "plu": "262",
+    "name": "Портокали на кг",
+    "nameEn": "Oranges per kg",
+    "category": "fruits",
+    "emoji": "🍊",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "271",
+    "name": "Мандарини на кг",
+    "nameEn": "Mandarins per kg",
+    "category": "fruits",
+    "emoji": "🍊",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "290",
+    "name": "Папая",
+    "nameEn": "Papaya (large)",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🥭",
+    "image": ""
+  },
+  {
+    "plu": "291",
+    "name": "Киви",
+    "nameEn": "Kiwi",
+    "category": "fruits",
+    "difficulty": "easy",
+    "emoji": "🥝",
+    "image": ""
+  },
+  {
+    "plu": "303",
+    "name": "Розови ябълки",
+    "nameEn": "Pink Apples",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍎",
+    "image": ""
+  },
+  {
+    "plu": "304",
+    "name": "Червени ябълки Кримсън сноу на кг",
+    "nameEn": "Crimson Snow Red Apples per kg",
+    "category": "fruits",
+    "emoji": "🍎",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "312",
+    "name": "Черно грозде със семки на кг",
+    "nameEn": "Черно грозде със семки на кг",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍇",
+    "image": ""
+  },
+  {
+    "plu": "321",
+    "name": "Зелени ябълки 2кг",
+    "nameEn": "Green Apples 2kg",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍏",
+    "image": ""
+  },
+  {
+    "plu": "324",
+    "name": "Червени ябълки сладки на кг",
+    "nameEn": "Sweet Red Apples per kg",
+    "category": "fruits",
+    "emoji": "🍎",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "341",
+    "name": "Бяло грозде със семки",
+    "nameEn": "White Grapes with Seeds",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍇",
+    "image": ""
+  },
+  {
+    "plu": "412",
+    "name": "Бяла Леща 500г",
+    "nameEn": "White Lentils 500g",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🫘",
+    "image": ""
+  },
+  {
+    "plu": "413",
+    "name": "Красива мускатка 250г",
+    "nameEn": "Butternut Squash 250g",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🎃",
+    "image": ""
+  },
+  {
+    "plu": "425",
+    "name": "Протеин пудинг",
+    "nameEn": "Protein Pudding",
+    "category": "snacks",
+    "difficulty": "medium",
+    "emoji": "🍮",
+    "image": ""
+  },
+  {
+    "plu": "431",
+    "name": "Салата микс в саксия",
+    "nameEn": "Салата микс в саксия",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "436",
+    "name": "Бейби спанак 125г",
+    "nameEn": "Baby Spinach 125g",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "437",
+    "name": "Чери домати на клонка на кг",
+    "nameEn": "Чери домати на клонка на кг",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "445",
+    "name": "Черешки 250 г опаковка",
+    "nameEn": "Cherries 250g pack",
+    "category": "fruits",
+    "emoji": "🍒",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "467",
+    "name": "Чери домати на кг",
+    "nameEn": "Cherry Tomatoes per kg",
+    "category": "vegetables",
+    "emoji": "🍅",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "471",
+    "name": "Пресен чесън на кг",
+    "nameEn": "Пресен чесън на кг",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🧄",
+    "image": ""
+  },
+  {
+    "plu": "472",
+    "name": "Плоски праскови 500г",
+    "nameEn": "Flat Peaches 500g",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "483",
+    "name": "Био банани",
+    "nameEn": "Organic Bananas",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍌",
+    "image": ""
+  },
+  {
+    "plu": "501",
+    "name": "Малини 125г",
+    "nameEn": "Raspberries 125g",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🫐",
+    "image": ""
+  },
+  {
+    "plu": "528",
+    "name": "Био авокадо",
+    "nameEn": "Organic Avocado",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🥑",
+    "image": ""
+  },
+  {
+    "plu": "533",
+    "name": "Мини диня",
+    "nameEn": "Mini Watermelon",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍉",
+    "image": ""
+  },
+  {
+    "plu": "535",
+    "name": "Пъпеш Галия на кг",
+    "nameEn": "Galia Melon per kg",
+    "category": "fruits",
+    "emoji": "🍈",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "541",
+    "name": "Деликатесен пъпеш",
+    "nameEn": "Delicatessen Melon",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍈",
+    "image": ""
+  },
+  {
+    "plu": "550",
+    "name": "Дини с малко семки",
+    "nameEn": "Seedless Watermelons",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍉",
+    "image": ""
+  },
+  {
+    "plu": "579",
+    "name": "Портокали за сок 3кг",
+    "nameEn": "Juicing Oranges 3kg",
+    "category": "fruits",
+    "emoji": "🍊",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "580",
+    "name": "Нектарини",
+    "nameEn": "Nectarines",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "590",
+    "name": "Кайсии",
+    "nameEn": "Apricots",
+    "category": "fruits",
+    "difficulty": "medium",
+    "emoji": "🍊",
+    "image": ""
+  },
+  {
+    "plu": "600",
+    "name": "Моркови",
+    "nameEn": "Carrots",
+    "category": "vegetables",
+    "difficulty": "easy",
+    "emoji": "🥕",
+    "image": ""
+  },
+  {
+    "plu": "606",
+    "name": "Ягоди 500г тарелка",
+    "nameEn": "Strawberries 500g",
+    "category": "fruits",
+    "difficulty": "easy",
+    "emoji": "🍓",
+    "image": ""
+  },
+  {
+    "plu": "609",
+    "name": "Чери домати микс 250г тарелка",
+    "nameEn": "Чери домати микс 250г тарелка",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "613",
+    "name": "Рома домати 500г",
+    "nameEn": "Roma Tomatoes 500g",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "614",
+    "name": "Домати \"Рома\" на кг",
+    "nameEn": "Roma Tomatoes per kg",
+    "category": "vegetables",
+    "emoji": "🍅",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "650",
+    "name": "Червено цвекло",
+    "nameEn": "Red Beetroot",
+    "category": "vegetables",
+    "difficulty": "medium",
+    "emoji": "🟣",
+    "image": ""
+  },
+  {
+    "plu": "651",
+    "name": "Карфиол на кг",
+    "nameEn": "Cauliflower per kg",
+    "category": "vegetables",
+    "emoji": "🥦",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "660",
+    "name": "Мити картофи на кг",
+    "nameEn": "Washed Potatoes per kg",
+    "category": "vegetables",
+    "emoji": "🥔",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "661",
+    "name": "Ранни картофи",
+    "nameEn": "New Potatoes",
+    "category": "vegetables",
+    "difficulty": "easy",
+    "emoji": "🥔",
+    "image": ""
+  },
+  {
+    "plu": "680",
+    "name": "Лук",
+    "nameEn": "Onion",
+    "category": "vegetables",
+    "difficulty": "easy",
+    "emoji": "🧅",
+    "image": ""
+  },
+  {
+    "plu": "702",
+    "name": "Био краставица за брой",
+    "nameEn": "Organic Cucumber per piece",
+    "category": "vegetables",
+    "emoji": "🥒",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "709",
+    "name": "Био лимони 500г",
+    "nameEn": "Organic Lemons 500g",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍋",
+    "image": ""
+  },
+  {
+    "plu": "712",
+    "name": "Био салата за бр.",
+    "nameEn": "Organic Lettuce per piece",
+    "category": "vegetables",
+    "emoji": "🥬",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "728",
+    "name": "Био лимони",
+    "nameEn": "Organic Lemons",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍋",
+    "image": ""
+  },
+  {
+    "plu": "731",
+    "name": "Резене",
+    "nameEn": "Fennel",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🌿",
+    "image": ""
+  },
+  {
+    "plu": "775",
+    "name": "Чушки, червени, Калифорния на кг",
+    "nameEn": "California Red Peppers per kg",
+    "category": "vegetables",
+    "emoji": "🫑",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "800",
+    "name": "Донат с лешници и шоколад",
+    "nameEn": "Hazelnut Chocolate Donut",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🍩",
+    "image": ""
+  },
+  {
+    "plu": "808",
+    "name": "Донат с ванилов пълнеж",
+    "nameEn": "Vanilla Cream Donut",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🍩",
+    "image": ""
+  },
+  {
+    "plu": "815",
+    "name": "Мини поничка с шоколадов пълнеж",
+    "nameEn": "Mini Chocolate Filled Donut",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍩",
+    "image": ""
+  },
+  {
+    "plu": "823",
+    "name": "Бутерка с шоколад",
+    "nameEn": "Chocolate Puff Pastry",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "826",
+    "name": "Шоко донат с поръска",
+    "nameEn": "Chocolate Donut with Sprinkles",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🍩",
+    "image": ""
+  },
+  {
+    "plu": "832",
+    "name": "Kit Kat Донат",
+    "nameEn": "Kit Kat Donut",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍩",
+    "image": ""
+  },
+  {
+    "plu": "833",
+    "name": "Баница със сирене и спанак 150г",
+    "nameEn": "Cheese & Spinach Banitsa 150g",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "841",
+    "name": "Oreo донат",
+    "nameEn": "Oreo Donut",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍩",
+    "image": ""
+  },
+  {
+    "plu": "845",
+    "name": "Многозърнест кроасан",
+    "nameEn": "Multigrain Croissant",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "850",
+    "name": "Геврек със сусам",
+    "nameEn": "Sesame Pretzel Ring",
+    "category": "bakery",
+    "difficulty": "easy",
+    "emoji": "🥨",
+    "image": ""
+  },
+  {
+    "plu": "851",
+    "name": "Вита баница със сирене",
+    "nameEn": "Twisted Cheese Banitsa",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "856",
+    "name": "Панетоне със стафиди и шоколад",
+    "nameEn": "Panettone with Raisins and Chocolate",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "860",
+    "name": "Селско хлебче",
+    "nameEn": "Country Bread Roll",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🍞",
+    "image": ""
+  },
+  {
+    "plu": "861",
+    "name": "Пълнозърнест земел с ленено семе",
+    "nameEn": "Wholegrain Roll with Flaxseed",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍞",
+    "image": ""
+  },
+  {
+    "plu": "862",
+    "name": "Болярска кашкавалка",
+    "nameEn": "Bolyarska Cheese Pastry",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "864",
+    "name": "Селско хлебче със семена",
+    "nameEn": "Country Bread Roll with Seeds",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍞",
+    "image": ""
+  },
+  {
+    "plu": "865",
+    "name": "Протеинов хляб",
+    "nameEn": "Protein Bread",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍞",
+    "image": ""
+  },
+  {
+    "plu": "866",
+    "name": "Ръчен хляб",
+    "nameEn": "Artisan Bread",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍞",
+    "image": ""
+  },
+  {
+    "plu": "879",
+    "name": "Рустикална минибагета",
+    "nameEn": "Rustic Mini Baguette",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🥖",
+    "image": ""
+  },
+  {
+    "plu": "884",
+    "name": "Кроасан с нуга пълнеж и лешници",
+    "nameEn": "Nougat Hazelnut Croissant",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "888",
+    "name": "Кроасан шунка и кашкавал",
+    "nameEn": "Ham and Cheese Croissant",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "899",
+    "name": "Milka Мъфин",
+    "nameEn": "Milka Muffin",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🧁",
+    "image": ""
+  },
+  {
+    "plu": "901",
+    "name": "Бял хляб",
+    "nameEn": "White Bread",
+    "category": "bakery",
+    "difficulty": "easy",
+    "emoji": "🍞",
+    "image": ""
+  },
+  {
+    "plu": "902",
+    "name": "Чабата класик",
+    "nameEn": "Classic Ciabatta",
+    "category": "bakery",
+    "difficulty": "easy",
+    "emoji": "🥖",
+    "image": ""
+  },
+  {
+    "plu": "903",
+    "name": "Кайзер земел със сусам",
+    "nameEn": "Sesame Kaiser Roll",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🥖",
+    "image": ""
+  },
+  {
+    "plu": "904",
+    "name": "Минифранзела със семена",
+    "nameEn": "Mini Seeded Bread Roll",
+    "category": "bakery",
+    "difficulty": "hard",
+    "emoji": "🍞",
+    "image": ""
+  },
+  {
+    "plu": "905",
+    "name": "Донат с лешници и бял шоколад",
+    "nameEn": "Donut with Hazelnuts and White Chocolate",
+    "category": "bakery",
+    "emoji": "🍩",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "907",
+    "name": "Болярски тутманик със сирене",
+    "nameEn": "Bolyarski Tutmanik with Cheese",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "908",
+    "name": "Кроасан с масло (27% масло)",
+    "nameEn": "Butter Croissant (27% butter)",
+    "category": "bakery",
+    "difficulty": "easy",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "909",
+    "name": "Кайзер земел бял",
+    "nameEn": "White Kaiser Roll",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🥖",
+    "image": ""
+  },
+  {
+    "plu": "912",
+    "name": "Багета с чеснов пълнеж",
+    "nameEn": "Garlic Filled Baguette",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🥖",
+    "image": ""
+  },
+  {
+    "plu": "914",
+    "name": "Оригинална френска багета",
+    "nameEn": "Original French Baguette",
+    "category": "bakery",
+    "difficulty": "easy",
+    "emoji": "🥖",
+    "image": ""
+  },
+  {
+    "plu": "915",
+    "name": "Геврек със сирене и сусам",
+    "nameEn": "Cheese & Sesame Pretzel Ring",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🥨",
+    "image": ""
+  },
+  {
+    "plu": "916",
+    "name": "Баница със сирене",
+    "nameEn": "Cheese Banitsa",
+    "category": "bakery",
+    "difficulty": "easy",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "918",
+    "name": "Кроасан с кренвирш",
+    "nameEn": "Sausage Croissant",
+    "category": "bakery",
+    "difficulty": "medium",
+    "emoji": "🥐",
+    "image": ""
+  },
+  {
+    "plu": "920",
+    "name": "Брецел",
+    "nameEn": "Bretzel",
+    "category": "bakery",
+    "difficulty": "easy",
+    "emoji": "🥨",
+    "image": ""
+  },
+  {
+    "plu": "921",
+    "name": "Мини кроасан с масло",
+    "nameEn": "Mini Butter Croissant",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "922",
+    "name": "Пърленка",
+    "nameEn": "Flatbread",
+    "category": "bakery",
+    "emoji": "🥖",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "923",
+    "name": "Френска закуска с крем и стафиди",
+    "nameEn": "French Pastry with Cream and Raisins",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "924",
+    "name": "Френска рустикална багета",
+    "nameEn": "French Rustic Baguette",
+    "category": "bakery",
+    "emoji": "🥖",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "926",
+    "name": "Кръгъл картофен хляб с лук",
+    "nameEn": "Round Potato Bread with Onion",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "927",
+    "name": "Багета по френска рецепта",
+    "nameEn": "French Recipe Baguette",
+    "category": "bakery",
+    "emoji": "🥖",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "928",
+    "name": "Пълнозърнеста пита с лимец",
+    "nameEn": "Wholegrain Spelt Flatbread",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "931",
+    "name": "Пица багета",
+    "nameEn": "Pizza Baguette",
+    "category": "bakery",
+    "emoji": "🍕",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "932",
+    "name": "Закуска с Гауда",
+    "nameEn": "Gouda Pastry",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "933",
+    "name": "Хляб със семена 700 г",
+    "nameEn": "Seeded Bread 700g",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "934",
+    "name": "Ръжено-пшеничен хляб",
+    "nameEn": "Rye-Wheat Bread",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "935",
+    "name": "Ръжен хляб с малц и течна ръж, закв",
+    "nameEn": "Rye Bread with Malt and Sourdough",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "936",
+    "name": "Мини пърленка",
+    "nameEn": "Mini Flatbread",
+    "category": "bakery",
+    "emoji": "🥖",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "939",
+    "name": "Хляб с 3 вида семена",
+    "nameEn": "Bread with 3 Types of Seeds",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "940",
+    "name": "Milk Donut",
+    "nameEn": "Milk Donut",
+    "category": "bakery",
+    "emoji": "🍩",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "941",
+    "name": "Шоколадов мъфин",
+    "nameEn": "Chocolate Muffin",
+    "category": "bakery",
+    "emoji": "🧁",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "949",
+    "name": "Пастички де Ната",
+    "nameEn": "Pastel de Nata",
+    "category": "bakery",
+    "emoji": "🥧",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "950",
+    "name": "Фокача с маслиново масло и маслини",
+    "nameEn": "Focaccia with Olive Oil and Olives",
+    "category": "bakery",
+    "emoji": "🥖",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "954",
+    "name": "Зеленчуков хляб",
+    "nameEn": "Vegetable Bread",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "956",
+    "name": "Закуска пица",
+    "nameEn": "Pizza Snack",
+    "category": "bakery",
+    "emoji": "🍕",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "959",
+    "name": "Хляб Содун по френска рецепта",
+    "nameEn": "Sodun Bread, French Recipe",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "960",
+    "name": "Поничка с пълнеж пълнеж",
+    "nameEn": "Filled Donut",
+    "category": "bakery",
+    "emoji": "🍩",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "961",
+    "name": "Кренвиршка",
+    "nameEn": "Sausage Roll",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "964",
+    "name": "Донат с ягодов пълнеж",
+    "nameEn": "Donut with Strawberry Filling",
+    "category": "bakery",
+    "emoji": "🍩",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "969",
+    "name": "Френска багета със семена",
+    "nameEn": "French Seeded Baguette",
+    "category": "bakery",
+    "emoji": "🥖",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "971",
+    "name": "Закуска с чоризо",
+    "nameEn": "Chorizo Pastry",
+    "category": "bakery",
+    "emoji": "🥐",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "973",
+    "name": "Бял хляб със сусамени поръски",
+    "nameEn": "White Bread with Sesame Topping",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "974",
+    "name": "Фермерски хляб",
+    "nameEn": "Farmer Bread",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "975",
+    "name": "Козуначе със стафиди",
+    "nameEn": "Sweet Bread with Raisins",
+    "category": "bakery",
+    "emoji": "🍞",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "976",
+    "name": "Пица парче",
+    "nameEn": "Pizza Slice",
+    "category": "bakery",
+    "emoji": "🍕",
+    "difficulty": "easy",
+    "image": ""
+  },
+  {
+    "plu": "109/EAN",
+    "name": "Зелени ябълки грени смит на кг",
+    "nameEn": "Granny Smith Green Apples per kg",
+    "category": "fruits",
+    "emoji": "🍏",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "13/EAN",
+    "name": "Броколи 500 г",
+    "nameEn": "Броколи 500 г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "16/EAN",
+    "name": "Карфиол за бр.",
+    "nameEn": "Карфиол за бр.",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "2/EAN",
+    "name": "Краставици за брой",
+    "nameEn": "Cucumbers per piece",
+    "category": "vegetables",
+    "emoji": "🥒",
+    "difficulty": "medium",
+    "image": ""
+  },
+  {
+    "plu": "203/EAN",
+    "name": "Краставици, мини на кг",
+    "nameEn": "Mini Cucumbers per kg",
+    "category": "vegetables",
+    "emoji": "🥒",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "205/EAN",
+    "name": "Бейби банан 250г",
+    "nameEn": "Бейби банан 250г",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍌",
+    "image": ""
+  },
+  {
+    "plu": "211/EAN",
+    "name": "Праскови 500 гр. - тарелка",
+    "nameEn": "Праскови 500 гр. - тарелка",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "222/EAN",
+    "name": "Люти чушки 200г опаковка",
+    "nameEn": "Люти чушки 200г опаковка",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🫑",
+    "image": ""
+  },
+  {
+    "plu": "225/EAN",
+    "name": "Чесън 200 г",
+    "nameEn": "Чесън 200 г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🧄",
+    "image": ""
+  },
+  {
+    "plu": "250/EAN",
+    "name": "Лимони 500 гр мрежа",
+    "nameEn": "Лимони 500 гр мрежа",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍋",
+    "image": ""
+  },
+  {
+    "plu": "300/EAN",
+    "name": "Репички 300г опаковка",
+    "nameEn": "Репички 300г опаковка",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "306/EAN",
+    "name": "Ябълки зелени на кг",
+    "nameEn": "Green Apples per kg",
+    "category": "fruits",
+    "emoji": "🍏",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "309/EAN",
+    "name": "Червени ябълки на кг",
+    "nameEn": "Червени ябълки на кг",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍎",
+    "image": ""
+  },
+  {
+    "plu": "310/EAN",
+    "name": "Чери домати 250г опаковка",
+    "nameEn": "Чери домати 250г опаковка",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "321/EAN",
+    "name": "Зелени ябълки 2кг",
+    "nameEn": "Зелени ябълки 2кг",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍎",
+    "image": ""
+  },
+  {
+    "plu": "330/EAN",
+    "name": "Круши, български на кг",
+    "nameEn": "Bulgarian Pears per kg",
+    "category": "fruits",
+    "emoji": "🍐",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "409/EAN",
+    "name": "Голяма тиквичка 250 г",
+    "nameEn": "Голяма тиквичка 250 г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🎃",
+    "image": ""
+  },
+  {
+    "plu": "412/EAN",
+    "name": "Бяла ряпа 500г",
+    "nameEn": "Бяла ряпа 500г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "413/EAN",
+    "name": "Красива маруля 250г",
+    "nameEn": "Красива маруля 250г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "42/EAN",
+    "name": "Рукола 125г",
+    "nameEn": "Рукола 125г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "422/EAN",
+    "name": "Био черв лук 500 г",
+    "nameEn": "Био черв лук 500 г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🧅",
+    "image": ""
+  },
+  {
+    "plu": "435/EAN",
+    "name": "Салата микс 125г",
+    "nameEn": "Салата микс 125г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "436/EAN",
+    "name": "Бейби спанак 125г",
+    "nameEn": "Бейби спанак 125г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "472/EAN",
+    "name": "Плоски праскови 500 гр. - тарелка",
+    "nameEn": "Плоски праскови 500 гр. - тарелка",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "474/EAN",
+    "name": "Чесън 100 г мрежа",
+    "nameEn": "Чесън 100 г мрежа",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🧄",
+    "image": ""
+  },
+  {
+    "plu": "48/EAN",
+    "name": "Спанак 500г - опаковка",
+    "nameEn": "Спанак 500г - опаковка",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "49/EAN",
+    "name": "Кориандър",
+    "nameEn": "Кориандър",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "505/EAN",
+    "name": "Малини 125г - тарелка",
+    "nameEn": "Малини 125г - тарелка",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🫐",
+    "image": ""
+  },
+  {
+    "plu": "506/EAN",
+    "name": "Боровинки 125г",
+    "nameEn": "Боровинки 125г",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🫐",
+    "image": ""
+  },
+  {
+    "plu": "512/EAN",
+    "name": "Салати различни видове 100г",
+    "nameEn": "Салати различни видове 100г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥬",
+    "image": ""
+  },
+  {
+    "plu": "528/EAN",
+    "name": "Био авокадо за бр.",
+    "nameEn": "Био авокадо за бр.",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🥑",
+    "image": ""
+  },
+  {
+    "plu": "534/EAN",
+    "name": "Физалис 100г опаковка",
+    "nameEn": "Физалис 100г опаковка",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍎",
+    "image": ""
+  },
+  {
+    "plu": "537/EAN",
+    "name": "Коктейлни домати на кг",
+    "nameEn": "Коктейлни домати на кг",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "542/EAN",
+    "name": "Печурки за грил 600г",
+    "nameEn": "Печурки за грил 600г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🍄",
+    "image": ""
+  },
+  {
+    "plu": "579/EAN",
+    "name": "Портокали 3 кг мрежа",
+    "nameEn": "Портокали 3 кг мрежа",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍊",
+    "image": ""
+  },
+  {
+    "plu": "581/EAN",
+    "name": "Нектарини 500 гр. - тарелка",
+    "nameEn": "Нектарини 500 гр. - тарелка",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "583/EAN",
+    "name": "Плоски нектарини 500 гр. - тарелка",
+    "nameEn": "Плоски нектарини 500 гр. - тарелка",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍑",
+    "image": ""
+  },
+  {
+    "plu": "601/EAN",
+    "name": "Целина стъбла 200г",
+    "nameEn": "Целина стъбла 200г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "602/EAN",
+    "name": "Коктейлни домати 500г",
+    "nameEn": "Коктейлни домати 500г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "606/EAN",
+    "name": "Ягоди 500г тарелка",
+    "nameEn": "Ягоди 500г тарелка",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍓",
+    "image": ""
+  },
+  {
+    "plu": "611/EAN",
+    "name": "Чери домати на клонка 300г",
+    "nameEn": "Чери домати на клонка 300г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🍅",
+    "image": ""
+  },
+  {
+    "plu": "635/EAN",
+    "name": "Пресни картофи на кг",
+    "nameEn": "Fresh Potatoes per kg",
+    "category": "vegetables",
+    "emoji": "🥔",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "652/EAN",
+    "name": "Червено цвекло 500г",
+    "nameEn": "Червено цвекло 500г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "670/EAN",
+    "name": "Бяло грозде без семки - премиум",
+    "nameEn": "Бяло грозде без семки - премиум",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍇",
+    "image": ""
+  },
+  {
+    "plu": "682/EAN",
+    "name": "Варена царевица 400г",
+    "nameEn": "Варена царевица 400г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🌽",
+    "image": ""
+  },
+  {
+    "plu": "7/EAN",
+    "name": "Моркови 1 кг тарелка",
+    "nameEn": "Моркови 1 кг тарелка",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥕",
+    "image": ""
+  },
+  {
+    "plu": "70/EAN",
+    "name": "Подправки в саксия",
+    "nameEn": "Подправки в саксия",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "702/EAN",
+    "name": "Био краставици за брой",
+    "nameEn": "Био краставици за брой",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥒",
+    "image": ""
+  },
+  {
+    "plu": "707/EAN",
+    "name": "Био моркови 500 г",
+    "nameEn": "Био моркови 500 г",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥕",
+    "image": ""
+  },
+  {
+    "plu": "709/EAN",
+    "name": "Био лимони 500г",
+    "nameEn": "Био лимони 500г",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍋",
+    "image": ""
+  },
+  {
+    "plu": "72/EAN",
+    "name": "Магданоз за брой",
+    "nameEn": "Parsley per piece",
+    "category": "vegetables",
+    "emoji": "🌿",
+    "difficulty": "hard",
+    "image": ""
+  },
+  {
+    "plu": "728/EAN",
+    "name": "Био лимони за бр",
+    "nameEn": "Био лимони за бр",
+    "category": "fruits",
+    "difficulty": "hard",
+    "emoji": "🍋",
+    "image": ""
+  },
+  {
+    "plu": "73/EAN",
+    "name": "Копър",
+    "nameEn": "Копър",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "778/EAN",
+    "name": "Био бели гъби 250г опаковка",
+    "nameEn": "Био бели гъби 250г опаковка",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🍄",
+    "image": ""
+  },
+  {
+    "plu": "786/EAN",
+    "name": "Пащърнак 200г опаковка",
+    "nameEn": "Пащърнак 200г опаковка",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🥦",
+    "image": ""
+  },
+  {
+    "plu": "8/EAN",
+    "name": "Лук 1 кг - мрежа",
+    "nameEn": "Лук 1 кг - мрежа",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🧅",
+    "image": ""
+  },
+  {
+    "plu": "853/EAN",
+    "name": "Люти чушки в саксия",
+    "nameEn": "Люти чушки в саксия",
+    "category": "vegetables",
+    "difficulty": "hard",
+    "emoji": "🫑",
+    "image": ""
+  }
+]

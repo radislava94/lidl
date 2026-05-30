@@ -1,0 +1,1057 @@
+[
+  {
+    "plu": 1,
+    "name": "Банани",
+    "category": "Fruits"
+  },
+  {
+    "plu": 2,
+    "name": "Краставици за бр.",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 3,
+    "name": "Салата Айсберг за бр.",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 5,
+    "name": "Домати на клонка на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 7,
+    "name": "Моркови 1кг опаковка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 8,
+    "name": "Лук 1 кг - мрежа",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 12,
+    "name": "Зеле на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 13,
+    "name": "Броколи 500 г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 15,
+    "name": "Целина на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 16,
+    "name": "Карфиол за бр.",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 18,
+    "name": "Чушки, зелени, Калифорния на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 19,
+    "name": "Зелени чушки Долма",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 20,
+    "name": "Чушки, червени на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 21,
+    "name": "Тиквички, тъмни на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 22,
+    "name": "Патладжани",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 24,
+    "name": "Тиква матилда на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 28,
+    "name": "Грейпфрут на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 30,
+    "name": "Червени ябълки на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 32,
+    "name": "Зелени ябълки",
+    "category": "Fruits"
+  },
+  {
+    "plu": 33,
+    "name": "Круши на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 34,
+    "name": "Бяло грозде без семки на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 36,
+    "name": "Ананас",
+    "category": "Fruits"
+  },
+  {
+    "plu": 37,
+    "name": "Манго",
+    "category": "Fruits"
+  },
+  {
+    "plu": 38,
+    "name": "Авокадо",
+    "category": "Fruits"
+  },
+  {
+    "plu": 39,
+    "name": "Нар за бр",
+    "category": "Fruits"
+  },
+  {
+    "plu": 41,
+    "name": "Гъби Печурка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 42,
+    "name": "Рукола 125г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 44,
+    "name": "Пресен лук връзка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 45,
+    "name": "Репички връзка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 47,
+    "name": "Пресен чесън връзка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 48,
+    "name": "Спанак 500г - опаковка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 49,
+    "name": "Кориандър",
+    "category": "Other"
+  },
+  {
+    "plu": 52,
+    "name": "Домати на клонка на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 53,
+    "name": "Пъпеш Галя",
+    "category": "Fruits"
+  },
+  {
+    "plu": 55,
+    "name": "Дини",
+    "category": "Fruits"
+  },
+  {
+    "plu": 60,
+    "name": "Домати Суийт Марманде на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 61,
+    "name": "Чери домати на клонка 500 г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 62,
+    "name": "Розови домати на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 68,
+    "name": "Царевица",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 70,
+    "name": "Подправки в саксия",
+    "category": "Other"
+  },
+  {
+    "plu": 72,
+    "name": "Магданоз за брой",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 73,
+    "name": "Копър",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 76,
+    "name": "Зелен алабаш за бр.",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 77,
+    "name": "Джинджифил",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 84,
+    "name": "Червен лук",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 89,
+    "name": "Сини сливи на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 91,
+    "name": "Сливи",
+    "category": "Fruits"
+  },
+  {
+    "plu": 109,
+    "name": "Зелени ябълки грени смит на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 113,
+    "name": "Лилави сладки картофи на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 116,
+    "name": "Червен картоф на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 117,
+    "name": "Сладки картофи",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 118,
+    "name": "Тиквички",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 119,
+    "name": "Червени мити картофи на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 125,
+    "name": "Шарени патладжани",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 138,
+    "name": "Романеско",
+    "category": "Other"
+  },
+  {
+    "plu": 141,
+    "name": "Ранно зеле на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 171,
+    "name": "Моркови връзка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 181,
+    "name": "Зелени чушки",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 202,
+    "name": "Краставици на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 203,
+    "name": "Краставици, мини на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 205,
+    "name": "Бейби Бапи",
+    "category": "Other"
+  },
+  {
+    "plu": 211,
+    "name": "Праскови",
+    "category": "Fruits"
+  },
+  {
+    "plu": 212,
+    "name": "Праскови на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 222,
+    "name": "Люти чушки 200г опаковка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 223,
+    "name": "Чесън",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 225,
+    "name": "Чесън 200 г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 233,
+    "name": "Папая",
+    "category": "Fruits"
+  },
+  {
+    "plu": 250,
+    "name": "Лимони 500 гр мрежа",
+    "category": "Fruits"
+  },
+  {
+    "plu": 251,
+    "name": "Лимони на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 252,
+    "name": "Лайм",
+    "category": "Fruits"
+  },
+  {
+    "plu": 261,
+    "name": "Лимони",
+    "category": "Fruits"
+  },
+  {
+    "plu": 262,
+    "name": "Портокали на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 271,
+    "name": "Мандарини на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 290,
+    "name": "Папая",
+    "category": "Fruits"
+  },
+  {
+    "plu": 291,
+    "name": "Киви",
+    "category": "Fruits"
+  },
+  {
+    "plu": 300,
+    "name": "Репички 300г опаковка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 303,
+    "name": "Розови ябълки",
+    "category": "Fruits"
+  },
+  {
+    "plu": 304,
+    "name": "Червени ябълки Кримсън сноу на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 306,
+    "name": "Ябълки зелени на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 309,
+    "name": "Червени ябълки на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 310,
+    "name": "Чери домати 250г опаковка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 312,
+    "name": "Черно грозде със семки на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 321,
+    "name": "Зелени ябълки 2кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 324,
+    "name": "Червени ябълки сладки на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 330,
+    "name": "Круши, български на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 341,
+    "name": "Бяло грозде със семки",
+    "category": "Fruits"
+  },
+  {
+    "plu": 409,
+    "name": "Голяма тиквичка 250 г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 412,
+    "name": "Бяла Леща 500г",
+    "category": "Other"
+  },
+  {
+    "plu": 413,
+    "name": "Красива мускатка 250г",
+    "category": "Other"
+  },
+  {
+    "plu": 422,
+    "name": "Био черв лук 500 г",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 425,
+    "name": "Протеин пудинг",
+    "category": "Protein Products"
+  },
+  {
+    "plu": 431,
+    "name": "Салата микс в саксия",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 435,
+    "name": "Салата микс 125г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 436,
+    "name": "Бейби спанак 125г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 437,
+    "name": "Чери домати на клонка на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 445,
+    "name": "Черешки 250 г опаковка",
+    "category": "Fruits"
+  },
+  {
+    "plu": 467,
+    "name": "Чери домати на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 471,
+    "name": "Пресен чесън на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 472,
+    "name": "Плоски праскови 500г",
+    "category": "Fruits"
+  },
+  {
+    "plu": 474,
+    "name": "Чесън 100 г мрежа",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 483,
+    "name": "Био банани",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 501,
+    "name": "Малини 125г",
+    "category": "Fruits"
+  },
+  {
+    "plu": 505,
+    "name": "Малини 125г - тарелка",
+    "category": "Fruits"
+  },
+  {
+    "plu": 506,
+    "name": "Боровинки 125г",
+    "category": "Fruits"
+  },
+  {
+    "plu": 512,
+    "name": "Салати различни видове 100г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 528,
+    "name": "Био авокадо",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 533,
+    "name": "Мини диня",
+    "category": "Fruits"
+  },
+  {
+    "plu": 534,
+    "name": "Физалис 100г опаковка",
+    "category": "Fruits"
+  },
+  {
+    "plu": 535,
+    "name": "Пъпеш Галия на кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 537,
+    "name": "Коктейлни домати на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 541,
+    "name": "Деликатесен пъпеш",
+    "category": "Fruits"
+  },
+  {
+    "plu": 542,
+    "name": "Печурки за грил 600г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 550,
+    "name": "Дини с малко семки",
+    "category": "Fruits"
+  },
+  {
+    "plu": 579,
+    "name": "Портокали за сок 3кг",
+    "category": "Fruits"
+  },
+  {
+    "plu": 580,
+    "name": "Нектарини",
+    "category": "Fruits"
+  },
+  {
+    "plu": 581,
+    "name": "Нектарини 500 гр. - тарелка",
+    "category": "Fruits"
+  },
+  {
+    "plu": 583,
+    "name": "Плоски нектарини 500 гр. - тарелка",
+    "category": "Fruits"
+  },
+  {
+    "plu": 590,
+    "name": "Кайсии",
+    "category": "Fruits"
+  },
+  {
+    "plu": 600,
+    "name": "Моркови",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 601,
+    "name": "Целина стъбла 200г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 602,
+    "name": "Коктейлни домати 500г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 606,
+    "name": "Ягоди 500г тарелка",
+    "category": "Fruits"
+  },
+  {
+    "plu": 609,
+    "name": "Чери домати микс 250г тарелка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 611,
+    "name": "Чери домати на клонка 300г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 613,
+    "name": "Рома домати 500г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 614,
+    "name": "Домати \"Рома\" на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 635,
+    "name": "Пресни картофи на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 650,
+    "name": "Червено цвекло",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 651,
+    "name": "Карфиол на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 652,
+    "name": "Червено цвекло 500г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 660,
+    "name": "Мити картофи на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 661,
+    "name": "Ранни картофи",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 670,
+    "name": "Бяло грозде без семки - премиум",
+    "category": "Fruits"
+  },
+  {
+    "plu": 680,
+    "name": "Лук",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 682,
+    "name": "Варена царевица 400г",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 702,
+    "name": "Био краставица за брой",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 707,
+    "name": "Био моркови 500 г",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 709,
+    "name": "Био лимони 500г",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 712,
+    "name": "Био салата за бр.",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 728,
+    "name": "Био лимони",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 731,
+    "name": "Резене",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 775,
+    "name": "Чушки, червени, Калифорния на кг",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 778,
+    "name": "Био бели гъби 250г опаковка",
+    "category": "Organic Products"
+  },
+  {
+    "plu": 786,
+    "name": "Пащърнак 200г опаковка",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 800,
+    "name": "Донат с лешници и шоколад",
+    "category": "Bakery"
+  },
+  {
+    "plu": 808,
+    "name": "Донат с ванилов пълнеж",
+    "category": "Bakery"
+  },
+  {
+    "plu": 815,
+    "name": "Мини поничка с шоколадов пълнеж",
+    "category": "Bakery"
+  },
+  {
+    "plu": 823,
+    "name": "Бутерка с шоколад",
+    "category": "Sweets"
+  },
+  {
+    "plu": 826,
+    "name": "Шоко донат с поръска",
+    "category": "Bakery"
+  },
+  {
+    "plu": 832,
+    "name": "Kit Kat Донат",
+    "category": "Bakery"
+  },
+  {
+    "plu": 833,
+    "name": "Баница със сирене и спанак 150г",
+    "category": "Bakery"
+  },
+  {
+    "plu": 841,
+    "name": "Oreo донат",
+    "category": "Bakery"
+  },
+  {
+    "plu": 845,
+    "name": "Многозърнест кроасан",
+    "category": "Bakery"
+  },
+  {
+    "plu": 850,
+    "name": "Геврек със сусам",
+    "category": "Bakery"
+  },
+  {
+    "plu": 851,
+    "name": "Вита баница със сирене",
+    "category": "Bakery"
+  },
+  {
+    "plu": 853,
+    "name": "Люти чушки в саксия",
+    "category": "Vegetables"
+  },
+  {
+    "plu": 856,
+    "name": "Панетоне със стафиди и шоколад",
+    "category": "Sweets"
+  },
+  {
+    "plu": 860,
+    "name": "Селско хлебче",
+    "category": "Bakery"
+  },
+  {
+    "plu": 861,
+    "name": "Пълнозърнест земел с ленено семе",
+    "category": "Bakery"
+  },
+  {
+    "plu": 862,
+    "name": "Болярска кашкавалка",
+    "category": "Dairy"
+  },
+  {
+    "plu": 864,
+    "name": "Селско хлебче със семена",
+    "category": "Bakery"
+  },
+  {
+    "plu": 865,
+    "name": "Протеинов хляб",
+    "category": "Protein Products"
+  },
+  {
+    "plu": 866,
+    "name": "Ръчен хляб",
+    "category": "Bakery"
+  },
+  {
+    "plu": 879,
+    "name": "Рустикална минибагета",
+    "category": "Bakery"
+  },
+  {
+    "plu": 884,
+    "name": "Кроасан с нуга пълнеж и лешници",
+    "category": "Bakery"
+  },
+  {
+    "plu": 888,
+    "name": "Кроасан шунка и кашкавал",
+    "category": "Bakery"
+  },
+  {
+    "plu": 899,
+    "name": "Milka Мъфин",
+    "category": "Bakery"
+  },
+  {
+    "plu": 901,
+    "name": "Бял хляб",
+    "category": "Bakery"
+  },
+  {
+    "plu": 902,
+    "name": "Чабата класик",
+    "category": "Bakery"
+  },
+  {
+    "plu": 903,
+    "name": "Кайзер земел със сусам",
+    "category": "Bakery"
+  },
+  {
+    "plu": 904,
+    "name": "Минифранзела със семена",
+    "category": "Other"
+  },
+  {
+    "plu": 905,
+    "name": "Донат с лешници и бял шоколад",
+    "category": "Bakery"
+  },
+  {
+    "plu": 907,
+    "name": "Болярски тутманик със сирене",
+    "category": "Bakery"
+  },
+  {
+    "plu": 908,
+    "name": "Кроасан с масло (27% масло)",
+    "category": "Bakery"
+  },
+  {
+    "plu": 909,
+    "name": "Кайзер земел бял",
+    "category": "Bakery"
+  },
+  {
+    "plu": 912,
+    "name": "Багета с чеснов пълнеж",
+    "category": "Bakery"
+  },
+  {
+    "plu": 914,
+    "name": "Оригинална френска багета",
+    "category": "Bakery"
+  },
+  {
+    "plu": 915,
+    "name": "Геврек със сирене и сусам",
+    "category": "Bakery"
+  },
+  {
+    "plu": 916,
+    "name": "Баница със сирене",
+    "category": "Bakery"
+  },
+  {
+    "plu": 918,
+    "name": "Кроасан с кренвирш",
+    "category": "Bakery"
+  },
+  {
+    "plu": 920,
+    "name": "Брецел",
+    "category": "Bakery"
+  },
+  {
+    "plu": 921,
+    "name": "Мини кроасан с масло",
+    "category": "Bakery"
+  },
+  {
+    "plu": 922,
+    "name": "Пърленка",
+    "category": "Bakery"
+  },
+  {
+    "plu": 923,
+    "name": "Френска закуска с крем и стафиди",
+    "category": "Bakery"
+  },
+  {
+    "plu": 924,
+    "name": "Френска рустикална багета",
+    "category": "Bakery"
+  },
+  {
+    "plu": 926,
+    "name": "Кръгъл картофен хляб с лук",
+    "category": "Bakery"
+  },
+  {
+    "plu": 927,
+    "name": "Багета по френска рецепта",
+    "category": "Bakery"
+  },
+  {
+    "plu": 928,
+    "name": "Пълнозърнеста пита с лимец",
+    "category": "Bakery"
+  },
+  {
+    "plu": 931,
+    "name": "Пица багета",
+    "category": "Bakery"
+  },
+  {
+    "plu": 932,
+    "name": "Закуска с Гауда",
+    "category": "Bakery"
+  },
+  {
+    "plu": 933,
+    "name": "Хляб със семена 700 г",
+    "category": "Bakery"
+  },
+  {
+    "plu": 934,
+    "name": "Ръжено-пшеничен хляб",
+    "category": "Bakery"
+  },
+  {
+    "plu": 935,
+    "name": "Ръжен хляб с малц и течна ръж, закв",
+    "category": "Bakery"
+  },
+  {
+    "plu": 936,
+    "name": "Мини пърленка",
+    "category": "Bakery"
+  },
+  {
+    "plu": 939,
+    "name": "Хляб с 3 вида семена",
+    "category": "Bakery"
+  },
+  {
+    "plu": 940,
+    "name": "Milk Donut",
+    "category": "Dairy"
+  },
+  {
+    "plu": 941,
+    "name": "Шоколадов мъфин",
+    "category": "Bakery"
+  },
+  {
+    "plu": 949,
+    "name": "Пастички де Ната",
+    "category": "Bakery"
+  },
+  {
+    "plu": 950,
+    "name": "Фокача с маслиново масло и маслини",
+    "category": "Bakery"
+  },
+  {
+    "plu": 954,
+    "name": "Зеленчуков хляб",
+    "category": "Bakery"
+  },
+  {
+    "plu": 956,
+    "name": "Закуска пица",
+    "category": "Bakery"
+  },
+  {
+    "plu": 959,
+    "name": "Хляб Содун по френска рецепта",
+    "category": "Bakery"
+  },
+  {
+    "plu": 960,
+    "name": "Поничка с пълнеж пълнеж",
+    "category": "Bakery"
+  },
+  {
+    "plu": 961,
+    "name": "Кренвиршка",
+    "category": "Meat"
+  },
+  {
+    "plu": 964,
+    "name": "Донат с ягодов пълнеж",
+    "category": "Bakery"
+  },
+  {
+    "plu": 969,
+    "name": "Френска багета със семена",
+    "category": "Bakery"
+  },
+  {
+    "plu": 971,
+    "name": "Закуска с чоризо",
+    "category": "Bakery"
+  },
+  {
+    "plu": 973,
+    "name": "Бял хляб със сусамени поръски",
+    "category": "Bakery"
+  },
+  {
+    "plu": 974,
+    "name": "Фермерски хляб",
+    "category": "Bakery"
+  },
+  {
+    "plu": 975,
+    "name": "Козуначе със стафиди",
+    "category": "Other"
+  },
+  {
+    "plu": 976,
+    "name": "Пица парче",
+    "category": "Bakery"
+  }
+]
