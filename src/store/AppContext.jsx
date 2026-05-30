@@ -192,12 +192,13 @@ export function AppProvider({ children }) {
 
   // ── Actions ───────────────────────────────────────────────────────────────
   const actions = {
-    // Called from the Welcome screen after entering a name
+    // Called from the Welcome screen after entering a name.
+    // Returns { player, isReturning } so callers know whether the player is new.
     loginWithName: (name) => {
-      const { player } = loginOrCreatePlayer(name);
+      const { player, isReturning } = loginOrCreatePlayer(name);
       const progress = getProgress(player.id);
       dispatch({ type: 'LOGIN', user: player, progress });
-      return player;
+      return { player, isReturning };
     },
 
     switchPlayer: (playerId) => {

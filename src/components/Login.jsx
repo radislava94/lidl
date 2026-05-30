@@ -15,19 +15,26 @@ export default function Login() {
   function handleStart(e) {
     e.preventDefault();
     const trimmed = name.trim();
-    if (!trimmed)          { setError('Please enter your name.'); return; }
-    if (trimmed.length < 2){ setError('Name must be at least 2 characters.'); return; }
+    if (!trimmed)           { setError('Please enter your name.'); return; }
+    if (trimmed.length < 2) { setError('Name must be at least 2 characters.'); return; }
     if (trimmed.length > 40){ setError('Name is too long (max 40 characters).'); return; }
-    const existing = players.find(player => String(player.name || '').trim().toLowerCase() === trimmed.toLowerCase());
-    setNotice('');
+
+    // Preview: check locally so we can show the notice before the timeout fires
+    const existingPreview = players.find(
+      p => String(p.name || '').trim().toLowerCase() === trimmed.toLowerCase()
+    );
+
+    setError('');
+    setNotice(existingPreview ? `Welcome back, ${existingPreview.name}!` : '');
     setLoading(true);
-    // Small delay for button feedback, then create/load player + enter app
+
+    // Short delay so the welcome-back message is visible before the page transitions
     setTimeout(() => {
-      actions.loginWithName(trimmed);
-    }, existing ? 400 : 150);
-    if (existing) {
-      setNotice(`Welcome back, ${existing.name}!`);
-    }
+      const { isReturning, player } = actions.loginWithName(trimmed);
+      // If our preview was wrong (edge-case: two tabs, race), correct the notice
+      if (!isReturning) setNotice('');
+      else if (!existingPreview) setNotice(`Welcome back, ${player.name}!`);
+    }, existingPreview ? 500 : 150);
   }
 
   function handleSelectPlayer(player) {
